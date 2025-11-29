@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
@@ -16,11 +16,10 @@ import { HomeService } from '../../home.service';
 })
 export class SearchBar {
   homeService = inject(HomeService);
+  
   searchFieldValue = "";
-  searchSubmit = output<string>();
   placeholder = input("");
 
-  
   enterPressed() {
     this.homeService.updateSearchBarInput(this.searchFieldValue)
   }

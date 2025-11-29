@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { HomeService } from '../../home.service';

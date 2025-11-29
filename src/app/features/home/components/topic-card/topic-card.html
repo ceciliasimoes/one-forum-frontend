@@ -1,5 +1,4 @@
 <mat-card (click)="this.redirectTo()">
-<!-- <mat-card> -->
     <div class="stats-container">
         <div class="stat">
             <span class="value">{{this.topic().likes}}</span>
@@ -27,9 +26,6 @@
                         <img [src]="this.topic().author?.profile?.photo" alt="">
                     }
                     @else {
-                        <!-- <mat-icon>
-                            person
-                        </mat-icon> -->
                         <span>{{this.topic().author?.profile?.name.slice(0, 2).toUpperCase()}}</span>
                     }
                 </div>

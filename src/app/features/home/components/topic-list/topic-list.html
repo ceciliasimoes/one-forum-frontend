@@ -5,15 +5,34 @@
     <div class="main-content-container">
         <div class="top-actions">
             <div class="ownership-filter-toggle">
-                <button [matButton]="this.activeAuthorFilter() === 'all' ? 'filled' : 'text'" (click)="authorFilter('all')">Todos</button>
-                <button [matButton]="this.activeAuthorFilter() === 'user' ? 'filled' : 'text'" [disabled]="" (click)="authorFilter('user')">Meus tópicos</button>
+                <button 
+                    [matButton]="this.activeAuthorFilter() === 'all' ? 'filled' : 'text'" 
+                    (click)="updateAuthorFilter('all')">
+                        <span>Todos</span>
+                </button>
+                <button 
+                    [matButton]="this.activeAuthorFilter() === 'user' ? 'filled' : 'text'" 
+                    [disabled]="" 
+                    (click)="updateAuthorFilter('user')">
+                        Meus tópicos
+                </button>
             </div>
             <div class="sort-options">
-                <button [matButton]="this.activeSort() === 'date' ? 'filled' : 'text'" value="date" (click)="sortList('date')">Mais recente</button>
-                <button [matButton]="this.activeSort() === 'moreLiked' ? 'filled' : 'text'" value="like" (click)="sortList('moreLiked')">Mais curtido</button>
+                <button 
+                    [matButton]="this.activeSort() === 'date' ? 'filled' : 'text'"
+                    (click)="updateSortList('date')">
+                        <mat-icon>schedule</mat-icon>
+                        <span>Mais recente</span>
+                </button>
+                <button 
+                    [matButton]="this.activeSort() === 'moreLiked' ? 'filled' : 'text'"
+                    (click)="updateSortList('moreLiked')">
+                        <mat-icon>thumb_up</mat-icon>
+                        <span>Mais curtido</span>
+                </button>
             </div>
         </div>
-        @if (this.statusFlag() === StatusFlagEnum.OK) {
+        @if (this.statusFlag() === StatusFlagEnum.OK && this.homeService.topicListRes().totalElements > 0) {
             @for (topic of this.homeService.topicListRes().list; track $index) {
                 <app-topic-card [topic]="topic"></app-topic-card>
             }

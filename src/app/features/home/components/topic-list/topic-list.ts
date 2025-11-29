@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { TopicCard } from '../topic-card/topic-card';
 import { MatAnchor, MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -33,16 +33,13 @@ export class TopicList {
   activeAuthorFilter = signal("all");
 
   statusFlag = computed(() => this.homeService.responseStatusFlag());
-
-  sortChanged = output<string>();
-  authorFilterChanged = output<string>();
   
-  sortList(value: "date" | "moreLiked") {
+  updateSortList(value: "date" | "moreLiked") {
     this.activeSort.set(value);
     this.homeService.updateListSort(value);
   }
 
-  authorFilter(value: "all" | "user") {
+  updateAuthorFilter(value: "all" | "user") {
     this.activeAuthorFilter.set(value);
     this.homeService.updateAuthorFilter(value);
   }

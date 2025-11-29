@@ -1,41 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, Injectable, signal, WritableSignal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Topic } from '../../core/models/topics';
 import { environment } from '../../../environments/environment';
 import { TopicQueryEntity } from './model/topic-query-entity.model';
 import { Pageable } from './model/pageable.model';
-import { Category } from './model/category.model';
 import { StatusFlag } from './model/status-flag.model';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { AuthService } from '../../core/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HomeService {
   
+  private authService = inject(AuthService)
   private httpClient: HttpClient;
   private apiUrl = environment.api + "/topics";
-  private loggedUserId = 1;
+  private loggedUserId = this.authService.getUserId(); // TODO: change to retrieve data from AuthService
 
   authorFilter = signal<"all" | "user">("all");
   listSort = signal<"date" | "moreLiked">("date");
   categoryId = signal<number | null>(null);
   searchBarInput = signal<string>("");
-  page = signal<number>(0);
-  size = signal<number>(10)
-  sort = signal<string[]>(["createdAt", "desc"])
+  pageable = signal<Pageable>({
+    page: 0,
+    size: 10,
+    sort: ["createdAt", "desc"]
+  })
 
-  topicQueryEntity = computed(() => {
+  topicQueryEntity = computed<TopicQueryEntity>(() => {
     return {
       authorId: this.authorFilter() === "user" ? this.loggedUserId : null,
       searchInput: this.searchBarInput(),
       categoryId: this.categoryId() != null ? this.categoryId() : null,
       moreLiked: this.listSort() === "moreLiked" ? true : false,
-      pageable: {
-        page: this.page(),
-        size: this.size(),
-        sort: this.sort()
-      }
+      pageable: this.pageable()
     }
   })
 
@@ -54,8 +52,7 @@ export class HomeService {
     this.httpClient = httpClient;
 
     effect(() => {
-      this.responseStatusFlag.set(StatusFlag.LOADING);
-      this.getAllTopics(this.topicQueryEntity(), {page: this.page(), size: this.size(), sort: this.sort()})
+      this.getAllTopics(this.topicQueryEntity(), this.pageable())
         .subscribe({
           next: res => {
             if (res.body) {
@@ -66,11 +63,9 @@ export class HomeService {
                 totalElements: res.body.totalElements,
                 itensPerPage: res.body.pageable.pageSize
               });
-              console.log(this.topicListRes())
             }
           },
           error: err => {
-            console.log("okokokok")
             this.responseStatusFlag.set(StatusFlag.ERROR);
             this.topicListRes.set({
                 list: err.body.content,
@@ -95,8 +90,20 @@ export class HomeService {
   updateSearchBarInput(value: string) {
     this.searchBarInput.set(value);
   }
+  updatePageable(
+    page: number = this.pageable().page,
+    size: number = this.pageable().size
+  ) {
+    this.pageable.set({
+      page: page,
+      size: size,
+      sort: this.pageable().sort
+    })
+  }
 
   getAllTopics(params: TopicQueryEntity, pageable: Pageable) {
+    this.responseStatusFlag.set(StatusFlag.LOADING);
+    
     let queryParams = new URLSearchParams();
 
     if (this.listSort() === "moreLiked") {
@@ -106,14 +113,6 @@ export class HomeService {
       pageable.sort = ["createdAt", "desc"]
     }
 
-    // queryParams.append("authorId", this.authorFilter() === 'user' ? this.loggedUserId.toString() : "");
-    // queryParams.append("categoryId", this.categoryId() ? this.categoryId()!.toString() : "");
-    // queryParams.append("title", this.searchBarInput());
-    // queryParams.append("moreLiked", this.listSort() === "moreLiked" ? "true" : "false");
-    // queryParams.append("page", this.pageable().page.toString())
-    // queryParams.append("size", this.pageable().size.toString())
-    // queryParams.append("sort", this.pageable().sort.toString())
-
     queryParams.append("authorId", params.authorId ? params.authorId.toString() : "");
     queryParams.append("categoryId", params.categoryId ? params.categoryId.toString() : "");
     queryParams.append("title", params.searchInput);
@@ -122,25 +121,14 @@ export class HomeService {
     queryParams.append("size", pageable.size.toString())
     queryParams.append("sort", pageable.sort.toString())
 
-    console.log(queryParams.toString())
-    
     return this.httpClient
-    .get<{
-      content: Topic[],
-      totalElements: number,
-      totalPages: number,
-      pageable: {
-        pageSize: number
-      }
-    }>(`${this.apiUrl}?${queryParams.toString()}`, {observe: 'response'})
+      .get<{
+        content: Topic[],
+        totalElements: number,
+        totalPages: number,
+        pageable: {
+          pageSize: number
+        }
+      }>(`${this.apiUrl}?${queryParams.toString()}`, {observe: 'response'})
   }
-
-  updatePageable(
-    page: number = this.page(),
-    size: number = this.size()
-  ) {
-    this.page.set(page)
-    this.size.set(size)
-  }
-
 }

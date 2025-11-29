@@ -8,16 +8,11 @@
     <mat-card-content>
         <ul class="filter-list">
             <li>
-                <div class="filter-title">
-                    <mat-icon>sell</mat-icon>
-                    <span>Categorias</span>
-                </div>
-                @if (this.isGettingCategories()) {
-                    <div class="">
-                        <mat-spinner></mat-spinner>
+                @if (this.statusFlag() === statusFlagEnumm.OK) {
+                    <div class="filter-title">
+                        <mat-icon>sell</mat-icon>
+                        <span>Categorias</span>
                     </div>
-                }
-                @else {
                     <mat-chip-listbox class="mat-mdc-chip-set-stacked">
                     @for (category of this.allCategories(); track $index) {
                             <mat-chip-option (selectionChange)="selectFilter($event, category.id)">
@@ -26,6 +21,20 @@
                             </mat-chip-option>
                         }
                     </mat-chip-listbox>
+                }
+                @else {
+                    <div class="status-message-container">
+                        @if (this.statusFlag() === statusFlagEnumm.LOADING) {
+                            <mat-spinner></mat-spinner>
+                            <span>Buscando filtros</span>
+                        }
+                        @else {
+                            <mat-icon>
+                                web_asset_off
+                            </mat-icon>
+                            <span>Não foi possível recuperar filtros</span>
+                        }
+                    </div>
                 }
             </li>
         </ul>

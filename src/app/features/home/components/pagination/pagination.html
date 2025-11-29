@@ -1,8 +1,8 @@
 <div class="pages-list">
     <mat-paginator
         [length]="this.homeService.topicListRes().totalElements"
-        [pageIndex]="this.homeService.page()"
-        [pageSize]="this.homeService.size()"
+        [pageIndex]="this.homeService.pageable().page"
+        [pageSize]="this.homeService.pageable().size"
         [pageSizeOptions]="[5, 10, 25, 50]"
         [showFirstLastButtons]="true"
         (page)="updatePage($event)"

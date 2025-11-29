@@ -8,18 +8,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { Category } from '../../model/category.model';
 import { HomeService } from '../../home.service';
+import { StatusFlag } from '../../model/status-flag.model';
 
 @Component({
   selector: 'app-filters-card',
-  imports: [MatCardModule, MatIconModule, MatProgressSpinnerModule, MatChipsModule, MatButtonModule, MatFormFieldModule],
+  imports: [
+    MatCardModule, 
+    MatIconModule, 
+    MatProgressSpinnerModule,
+    MatChipsModule, 
+    MatButtonModule, 
+    MatFormFieldModule
+  ],
   templateUrl: './filters-card.html',
   styleUrl: './filters-card.css',
 })
 export class FiltersCard {
   private readonly categoryService = inject(CategoryService);
   private readonly homeService = inject(HomeService);
+  readonly statusFlagEnumm = StatusFlag;
 
-  isGettingCategories = signal(false);
+  statusFlag = signal(StatusFlag.OK);
   allCategories = signal<Category[]>([])
 
   selectedCategory: number | null = null;
@@ -29,25 +38,23 @@ export class FiltersCard {
   }
 
   loadCategories() {
-    this.isGettingCategories.set(true);
+    this.statusFlag.set(StatusFlag.LOADING);
     this.categoryService.getAllCategories().subscribe({
       next: categoriesList => {
         this.allCategories.set(categoriesList);
-        this.isGettingCategories.set(false);
+        this.statusFlag.set(StatusFlag.OK);
       },
       error: err => {
-        this.isGettingCategories.set(false);
+        this.statusFlag.set(StatusFlag.ERROR);
       }
     });
   }
 
   selectFilter(event: MatChipSelectionChange, categoryId: number) {
     if (event.selected) {
-      console.log("selecionado: " + categoryId);
       this.homeService.updateCategory(categoryId);
       return;
     }
-    console.log("desselecionado: " + categoryId);
     this.homeService.updateCategory(null);
   }
 }
