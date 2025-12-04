@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="nav-and-actions">
+        <div class="buttons-row">
+            <div class="nav-buttons-container">
+                <button matButton="filled">Feed</button>
+                <button matButton="text">Explorar</button>
+            </div>
+            <button matButton="filled" [disabled]="!isUserLogged()" (click)="createTopicBtnClick()">Criar tópico</button>
+        </div>
+        <app-search-bar placeholder="Pesquise por título ou nome do autor"></app-search-bar>
+    </div>
+    <div>
+        <app-topic-list 
+        ></app-topic-list>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+.pages-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spacer {
+    width: 1px;
+    height: 1rem;
+    background: #EEEEEE;
+}

@@ -1,0 +1,42 @@
+<mat-card (click)="this.redirectTo()">
+<!-- <mat-card> -->
+    <div class="stats-container">
+        <div class="stat">
+            <span class="value">{{this.topic().likes}}</span>
+            <span class="label">curtidas</span>
+        </div>
+    </div>
+    <div class="card-content-container">
+        <mat-card-header>
+            <mat-card-title>{{this.topic().title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-footer>
+            <div>
+                <mat-chip-set>
+                    @for (category of this.categoriesShown(); track $index) {
+                        <mat-chip>{{category.name}}</mat-chip>
+                    }
+                    @if (this.categoriesHidden()) {
+                        <mat-chip [matTooltip]="this.categoriesHiddenString()" matTooltipClass="tooltip-class">{{this.categoriesHidden()!.length}}+</mat-chip>
+                    }
+                </mat-chip-set>
+            </div>
+            <div class="user-info">
+                <div class="pfp-container">
+                    @if (this.topic().author?.profile?.photo) {
+                        <img [src]="this.topic().author?.profile?.photo" alt="">
+                    }
+                    @else {
+                        <!-- <mat-icon>
+                            person
+                        </mat-icon> -->
+                        <span>{{this.topic().author?.profile?.name.slice(0, 2).toUpperCase()}}</span>
+                    }
+                </div>
+                <span>{{this.topic().author?.profile?.name}}</span>
+                <span> · </span>
+                <span>{{this.createdAt().toLocaleDateString()}}</span>
+            </div>
+        </mat-card-footer>
+    </div>
+</mat-card>

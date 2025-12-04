@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Topic, TopicCreateRequest, TopicEditRequest, UpdateTopicRequest } from '../models/topics';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Topic, TopicCreateRequest, TopicEditRequest, UpdateTopicRequest } from 
 export class TopicService {
   constructor(private http: HttpClient) {}
 
-  private api = 'http://localhost:8080/topics';
+  private api = environment.api + '/topics';
 
   getTopics(page = 0, size = 10): Observable<{ content: Topic[] }> {
     return this.http.get<{ content: Topic[] }>(`${this.api}?page=${page}&size=${size}`);
