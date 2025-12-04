@@ -7,6 +7,7 @@ import { AnswersContainer } from '../../components/answers-container/answers-con
 import { ActivatedRoute } from '@angular/router';
 import { TopicService } from '../../../../core/services/topics';
 import { Topic } from '../../../../core/models/topics';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'topic-detail',
@@ -16,6 +17,7 @@ import { Topic } from '../../../../core/models/topics';
   styleUrl: './topic-detail.css',
 })
 export class TopicDetail {
+  private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
   private readonly topicId = this.route.snapshot.paramMap.get('id');
   private readonly topicService = inject(TopicService);
@@ -29,7 +31,7 @@ export class TopicDetail {
         id: topic.id,
         content: topic.content,
         likedByCurrentUser: topic.likedByCurrentUser,
-        user: topic.user,
+        author: topic.author,
         createdAt: topic.createdAt,
         updatedAt: topic.updatedAt,
         categories: topic.categories,
@@ -39,5 +41,9 @@ export class TopicDetail {
 
   onSubmitAnswer(text: string) {
     //TODO: implementar lógica de envio de resposta
+  }
+
+  backToPreviousPage() {
+    this.location.back();
   }
 }

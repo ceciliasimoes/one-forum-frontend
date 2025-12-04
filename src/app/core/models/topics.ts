@@ -19,7 +19,7 @@ export interface Topic {
   likes: number;
   content: string | null;
   likedByCurrentUser: boolean;
-  user: any;
+  author: any;
   createdAt: string;
   updatedAt: string;
   categories: TopicCategory[];
