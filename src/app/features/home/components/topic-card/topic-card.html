@@ -22,14 +22,14 @@
             </div>
             <div class="user-info">
                 <div class="pfp-container">
-                    @if (this.topic().author?.profile?.photo) {
-                        <img [src]="this.topic().author?.profile?.photo" alt="">
+                    @if (this.topic().author.profile.photo) {
+                        <img [src]="this.topic().author.profile.photo" alt="">
                     }
                     @else {
-                        <span>{{this.topic().author?.profile?.name.slice(0, 2).toUpperCase()}}</span>
+                        <span>{{this.topic().author.profile.name.slice(0, 2).toUpperCase()}}</span>
                     }
                 </div>
-                <span>{{this.topic().author?.profile?.name}}</span>
+                <span>{{this.topic().author.profile.name}}</span>
                 <span> · </span>
                 <span>{{this.createdAt().toLocaleDateString()}}</span>
             </div>

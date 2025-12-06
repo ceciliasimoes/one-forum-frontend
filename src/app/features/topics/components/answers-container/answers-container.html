@@ -1,14 +1,7 @@
-<h3>{{ answers.length }} Answers</h3>
+<h3 aria-live="polite">{{ answers().length }} Resposta{{ answers().length !== 1 ? 's' : '' }}</h3>
 
-@if (answers.length === 0) {
-  <no-answers-card></no-answers-card>
-} @else { @for (answers of answers; track $index) {}
-  <answer-card
-    [answer]="{
-      user: { name: 'Test User', initials: 'TU' },
-      text: 'dddddddddddddddddd',
-      timeAgo: '21 hours ago'
-    }"
-    [showButtons]="true"
-    ></answer-card>
-}
+@if (answers().length === 0) {
+<no-answers-card></no-answers-card>
+} @else { @for (answer of answers(); track $index) {
+<answer-card [answer]="answer" (deleteAnswer)="deleteAnswer.emit(answer.id)"></answer-card>
+} }

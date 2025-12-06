@@ -1,0 +1,52 @@
+.dialog-container {
+  width: 500px;
+}
+
+.full {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.tag-label {
+  margin-top: 18px;
+  display: block;
+  font-weight: 600;
+}
+
+.tag-box {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.tag-input {
+  flex: 1;
+}
+
+.tag-list {
+  margin-top: 10px;
+}
+
+.footer {
+  flex-wrap: nowrap;
+
+  button {
+    width: 50%;
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: none;
+
+    &.submit-btn {
+      background: #0f172a;
+      color: white;
+    }
+    &.cancel-btn {
+      background: #e5e7eb;
+      color: #0f172a;
+    }
+  }
+}

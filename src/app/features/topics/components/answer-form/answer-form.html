@@ -1,12 +1,22 @@
-<div class="card">
-  <h3>Your Answer</h3>
+<div class="card" role="form" aria-labelledby="answerFormTitle">
+  <h3 id="answerFormTitle">Sua Resposta</h3>
 
-  <textarea class="input" placeholder="Write your answer here..." [(ngModel)]="text"></textarea>
+  <textarea 
+    class="input" 
+    placeholder="Escreva sua resposta aqui..." 
+    [(ngModel)]="text" 
+    aria-label="Campo de resposta" 
+    required>
+  </textarea>
 
   <div class="bottom">
-    <button class="submit-btn" mat-button (click)="submit()">
+    <button 
+      class="submit-btn" 
+      mat-button 
+      (click)="submit()" 
+      aria-label="Enviar resposta">
       <mat-icon>send</mat-icon>
-      Post Answer
+      Envie sua resposta
     </button>
   </div>
 </div>

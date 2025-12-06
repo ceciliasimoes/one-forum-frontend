@@ -1,0 +1,108 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title id="topicDialogTitle">
+    {{ data.mode === 'edit' ? 'Editar pergunta' : 'Fazer uma pergunta' }}
+  </h2>
+
+  <mat-dialog-content class="mat-typography" role="document" aria-labelledby="topicDialogTitle">
+    <form [formGroup]="form" (ngSubmit)="save()" aria-describedby="formHelpText" novalidate>
+      <p id="formHelpText" class="visually-hidden">
+        Preencha o título e a descrição. Você pode adicionar e remover categorias.
+      </p>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label id="titleLabel">Título</mat-label>
+        <input
+          matInput
+          id="titleInput"
+          placeholder="Seja específico..."
+          formControlName="title"
+          aria-labelledby="titleLabel"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label id="descLabel">Descrição</mat-label>
+        <textarea
+          matInput
+          id="descInput"
+          rows="4"
+          placeholder="Explique seu problema..."
+          formControlName="content"
+          aria-labelledby="descLabel"
+          required
+        ></textarea>
+      </mat-form-field>
+
+      @if (this.data.mode === 'create') {
+      <div
+        class="category-group"
+        role="group"
+        aria-labelledby="categoryGroupLabel"
+        aria-describedby="categoryGroupHelp"
+      >
+        <div id="categoryGroupLabel" class="category-label">Categorias</div>
+        <p id="categoryGroupHelp" class="visually-hidden">
+          Digite uma categoria e clique em Adicionar. Remova uma categoria pelo botão de remover em cada chip.
+        </p>
+
+        <div class="category-box">
+          <mat-form-field appearance="outline" class="category-input">
+            <mat-label id="categoryInputLabel">Adicionar categoria</mat-label>
+            <input
+              matInput
+              id="categoryInput"
+              placeholder="e.g. Java, SQL..."
+              [value]="categoryInput()"
+              (input)="categoryInput.set($any($event.target).value)"
+              aria-labelledby="categoryInputLabel"
+              autocomplete="off"
+            />
+          </mat-form-field>
+
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="addCategory()"
+            aria-label="Adicionar categoria"
+          >
+            Adicionar
+          </button>
+        </div>
+      </div>
+      }
+
+      <div class="category-list" aria-live="polite">
+        <mat-chip-set aria-label="Lista de categorias">
+          @for (category of categoryList(); track $index) {
+          <mat-chip (removed)="removeCategory(category)" removable="true" aria-label="Categoria {{ category }}">
+            <span>{{ category }}</span>
+            @if (this.data.mode === 'create') {
+            <button
+              mat-icon-button
+              matChipRemove
+              type="button"
+              aria-label="Remover categoria {{ category }}"
+              title="Remover {{ category }}"
+            >
+              <mat-icon aria-hidden="true">close</mat-icon>
+            </button>
+            }
+          </mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="footer" align="end">
+    <button class="cancel-btn" mat-button type="button" (click)="cancel()" aria-label="Cancelar">
+      Cancelar
+    </button>
+    <button (click)="save()" class="submit-btn" mat-button color="primary" type="submit" aria-label="Salvar">
+      {{ data.mode === 'edit' ? 'Salvar mudanças' : 'Postar sua pergunta' }}
+    </button>
+  </mat-dialog-actions>
+</div>

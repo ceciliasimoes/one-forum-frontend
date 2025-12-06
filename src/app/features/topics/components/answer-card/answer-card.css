@@ -5,6 +5,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 8px;
   gap: 8px;
 }
 
@@ -38,15 +39,22 @@
   flex-direction: column;
 }
 
-.name {
-  font-weight: 600;
-  font-size: 15px;
-  color: #0f172a;
-}
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  
+  .name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #0f172a;
+  }
 
-.time {
-  font-size: 13px;
-  color: #64748b;
+  .time {
+    font-size: 13px;
+    color: #64748b;
+  }
 }
 
 .text {
@@ -57,9 +65,18 @@
 }
 
 .delete-btn mat-icon {
-  color: #ef4444; /* vermelho */
+  color: #ef4444;
 }
 
-.buttons{
-    
+.edit-box {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
 }

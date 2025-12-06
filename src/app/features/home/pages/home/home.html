@@ -5,7 +5,7 @@
                 <button matButton="filled">Feed</button>
                 <button matButton="text">Explorar</button>
             </div>
-            <button matButton="filled" [disabled]="!isUserLogged()" (click)="createTopicBtnClick()">Criar tópico</button>
+            <button matButton="filled" [disabled]="!(this.authService.isLogged$ | async)" (click)="createTopicBtnClick()">Criar tópico</button>
         </div>
         <app-search-bar placeholder="Pesquise por título ou nome do autor"></app-search-bar>
     </div>

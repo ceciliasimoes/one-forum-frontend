@@ -1,61 +1,99 @@
-<mat-card class="topic-card" appearance="outlined">
-  <div class="topic-header">
-    <mat-card-title>{{ topic().title || '' }}</mat-card-title>
+<mat-card class="topic-card" appearance="outlined" role="article" [attr.aria-labelledby]="'topic-title-' + topic().id">
+  <header class="topic-header">
+    <mat-card-title id="{{ 'topic-title-' + topic().id }}">
+      {{ topic().title || '' }}
+    </mat-card-title>
 
-    <div class="action-buttons">
-      <button mat-stroked-button style="color: #0f172a" class="btn-edit">
-        <mat-icon style="color: #0f172a">edit</mat-icon>
-        Edit
-      </button>
+    @if (showButtons()) {
+      <div class="action-buttons" role="group" aria-label="Ações do tópico">
+        <button
+          mat-stroked-button
+          type="button"
+          class="btn-edit"
+          (click)="openEditDialog()"
+          aria-label="Editar tópico"
+        >
+          <mat-icon aria-hidden="true">edit</mat-icon>
+          Editar
+        </button>
 
-      <button mat-stroked-button style="color: #0f172a" class="btn-delete">
-        <mat-icon>delete</mat-icon>
-        Delete
-      </button>
-    </div>
-  </div>
+        <button
+          mat-stroked-button
+          type="button"
+          class="btn-delete"
+          aria-label="Deletar tópico"
+          (click)="deleteTopic()"
+        >
+          <mat-icon aria-hidden="true">delete</mat-icon>
+          Deletar
+        </button>
+      </div>
+    }
+  </header>
 
-  <mat-chip-set class="tag-list">
-    <mat-chip class="tag" *ngFor="let tag of topic().categories">{{ tag.name }}</mat-chip>
+  <mat-chip-set class="tag-list" aria-label="Categorias do tópico">
+    @for (tag of topic().categories; track $index) {
+      <mat-chip class="tag" aria-label="Categoria {{ tag.name }}">{{ tag.name }}</mat-chip>
+    }
   </mat-chip-set>
 
-  <mat-card-content style="margin: 20px 0px">
+  <mat-card-content class="topic-content">
     <p class="topic-text">{{ topic().content }}</p>
   </mat-card-content>
 
-  <div class="topic-footer">
+  <footer class="topic-footer">
     <div class="user-info">
-      <div class="avatar-text">{{ topic().author?.profile?.name }}</div>
+      <div class="avatar">
+        @if (topic().author.profile.photo) {
+          <img
+            [src]="topic().author.profile.photo"
+            [alt]="'Foto de ' + topic().author.profile.name"
+            width="40"
+            height="40"
+          />
+        } @else {
+          <div
+            class="avatar-fallback"
+            role="img"
+            [attr.aria-label]="'Avatar de ' + topic().author.profile.name"
+          >
+            {{ getInitials(topic().author.profile.name) }}
+          </div>
+        }
+      </div>
 
       <div class="details">
-        <span class="name">{{ topic().author?.name }}</span>
+        <span class="name">{{ topic().author.profile.name }}</span>
 
         <div class="date">
-          <mat-icon class="date-icon">calendar_today</mat-icon>
-          <span>{{ topic().createdAt }}</span>
+          <mat-icon class="date-icon" aria-hidden="true">calendar_today</mat-icon>
+          <time [attr.datetime]="topic().createdAt">
+            {{ topic().createdAt | date : 'dd/MM/yyyy HH:mm' }}
+          </time>
         </div>
       </div>
     </div>
 
-    <div class="topic-stats">
+    <div class="topic-stats" role="group" aria-label="Estatísticas do tópico">
       <button
         mat-stroked-button
+        type="button"
         class="like-btn"
         [class.liked]="topic().likedByCurrentUser"
         (click)="toggleLike()"
-        style="color: #0f172a"
+        [attr.aria-pressed]="topic().likedByCurrentUser"
+        [attr.aria-label]="topic().likedByCurrentUser ? 'Descurtir. Total de curtidas ' + topic().likes : 'Curtir. Total de curtidas ' + topic().likes"
       >
-        <mat-icon style="color: #0f172a">
+        <mat-icon aria-hidden="true">
           {{ topic().likedByCurrentUser ? 'thumb_up' : 'thumb_up_off_alt' }}
         </mat-icon>
-
-        {{ topic().likes }}
+        <span aria-live="polite">{{ topic().likes }}</span>
       </button>
 
-      <div class="answers-info">
-        <mat-icon>chat_bubble_outline</mat-icon>
-        <span>{{ topic().createdAt }} answers</span>
+      <div class="answers-info" aria-label="{{ answers() }} respostas">
+        <mat-icon aria-hidden="true">chat_bubble_outline</mat-icon>
+        <span>{{ answers() }} respostas</span>
       </div>
     </div>
-  </div>
+  </footer>
 </mat-card>

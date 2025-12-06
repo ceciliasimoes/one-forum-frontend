@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class TopicService {
   constructor(private http: HttpClient) {}
 
-  private api = environment.api + '/topics';
+  private api = environment.apiBaseUrl + '/topics';
 
   getTopics(page = 0, size = 10): Observable<{ content: Topic[] }> {
     return this.http.get<{ content: Topic[] }>(`${this.api}?page=${page}&size=${size}`);

@@ -22,8 +22,8 @@ export class HomeService {
   private route = inject(ActivatedRoute);
 
   private httpClient: HttpClient;
-  private apiUrl = environment.api + "/topics";
-  private loggedUserId = this.authService.getUserId(); // TODO: change to retrieve data from AuthService
+  private apiUrl = environment.apiBaseUrl + "/topics";
+  private loggedUserId = computed(() => this.authService.currentUser()?.id); // TODO: change to retrieve data from AuthService
 
   responseStatusFlag = signal(StatusFlag.OK);
 
@@ -38,7 +38,7 @@ export class HomeService {
       
       let queryParams = new URLSearchParams();
 
-      queryParams.append("authorId", filters.mine ? this.loggedUserId.toString() : '');
+      queryParams.append("authorId", filters.mine ? this.loggedUserId()?.toString() || '' : '');
       queryParams.append("categoryId", filters.category?.toString() || "");
       queryParams.append("title", filters.search || "");
       queryParams.append("moreLiked", filters.moreLiked?.toString() || "");
@@ -73,26 +73,6 @@ export class HomeService {
         size: +params['size'] || 10,
         sort: params['sort'] || 'createdAt,desc'
       })
-    })
-
-    this.reqResults$.subscribe(data => {
-      const totalPages = data.totalPages;
-      const safePage = Math.max(0, Math.min(data.pageable.pageNumber, totalPages - 1));
-      const safeSize = Math.min(data.pageable.pageSize, 50);
-
-      const currentParams = this.route.snapshot.queryParams;
-
-      if (
-        +currentParams['page'] !== safePage ||
-        +currentParams['size'] !== safeSize
-      ) {
-        this.router.navigate([], {
-            queryParams: {page: safePage, size: safeSize},
-            queryParamsHandling: "merge",
-            replaceUrl: true
-          },  
-        )
-      }
     })
   }
 

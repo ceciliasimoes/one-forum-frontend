@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  height: 100vh;
+
+  .left {
+    width: 100%;
+    max-width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+
+    .box {
+      width: 100%;
+      max-width: 380px;
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        color: #666;
+        margin-bottom: 24px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .full {
+          width: 100%;
+        }
+      }
+
+      .login-text {
+        margin-top: 20px;
+        text-align: center;
+        color: #666;
+      }
+    }
+  }
+
+  .right {
+    flex: 1;
+    background-image: url('https://images.unsplash.com/photo-1758270704534-fd9715bffc0e?w=1080');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: none;
+
+    @media (min-width: 992px) {
+      display: block;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, rgba(108, 0, 255, 0.7), rgba(0, 102, 255, 0.7));
+      color: white;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h2 {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .avatar-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .avatar-upload input {
+    display: none;
+  }
+
+  .avatar-placeholder,
+  .avatar-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    background: #f0f0f0;
+    color: #666;
+    text-align: center;
+  }
+}

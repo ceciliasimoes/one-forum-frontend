@@ -1,29 +1,56 @@
-<div class="card">
+<div class="card" role="article">
   <div class="top-row">
     <div class="user-info">
-      <div class="avatar">{{ answer()?.user?.initials }}</div>
+      <div class="avatar" aria-label="User profile photo">
+        @if (answer().userProfilePhoto) {
+        <img
+          [src]="answer().userProfilePhoto"
+          alt="Profile photo of {{ answer().userProfileName }}"
+        />
+        } @else {
+        <div class="avatar-fallback" aria-label="User initials">
+          {{ getInitials(answer().userProfileName) }}
+        </div>
+        }
+      </div>
 
-      <div class="meta">
-        <span class="name">{{ answer()?.user?.name }}</span>
-        <span class="time">{{ answer()?.timeAgo }}</span>
+      <div class="details">
+        <span class="name" id="answer-title-{{ answer().id }}">{{ answer().userProfileName }}</span>
+        <span class="time">{{ answer().createdAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </div>
     </div>
 
     @if (showButtons()) {
-      <div class="buttons">
-        <button matIconButton aria-label="Example icon button with a vertical three dot icon">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          class="delete-btn"
-          matIconButton
-          aria-label="Example icon button with a vertical three dot icon"
-          (click)="delete()"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+    <div class="buttons">
+      @if (!isEditing()) {
+      <button matIconButton aria-label="Edit your answer" (click)="startEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      }
+      <button class="delete-btn" matIconButton aria-label="Delete this answer" (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
     }
   </div>
-  <p class="text">{{ answer()?.text }}</p>
+
+  @if (!isEditing()) {
+  <p class="text" aria-label="Answer content">{{ answer().content }}</p>
+  } @if (isEditing()) {
+  <textarea
+    class="edit-box"
+    [(ngModel)]="editContent"
+    rows="4"
+    aria-label="Edit answer content"
+  ></textarea>
+
+  <div class="edit-actions">
+    <button mat-raised-button color="primary" (click)="saveEdit()" aria-label="Save changes">
+      Salvar
+    </button>
+    <button mat-raised-button color="warn" (click)="cancelEdit()" aria-label="Cancel editing">
+      Cancelar
+    </button>
+  </div>
+  }
 </div>

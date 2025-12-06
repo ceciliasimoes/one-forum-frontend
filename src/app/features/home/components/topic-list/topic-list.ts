@@ -10,6 +10,9 @@ import { StatusFlag } from '../../model/status-flag.model';
 import { Topic } from '../../../../core/models/topics';
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../../core/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 
 
 @Component({
@@ -22,7 +25,8 @@ import { Subscription } from 'rxjs';
     MatIconModule,
     MatProgressSpinnerModule,
     FiltersCard,
-    MatPaginatorModule
+    MatPaginatorModule,
+    AsyncPipe
 ],
   templateUrl: './topic-list.html',
   styleUrl: './topic-list.css',
@@ -30,6 +34,9 @@ import { Subscription } from 'rxjs';
 export class TopicList {
   StatusFlagEnum = StatusFlag;
   homeService = inject(HomeService);
+  authService = inject(AuthService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
 
   topics: Topic[] = [];
   totalElements = 0;
@@ -46,6 +53,24 @@ export class TopicList {
 
   ngOnInit() {
     this.initFirstReqSubscription = this.homeService.reqResults$.subscribe(data => {
+      const totalPages = data.totalPages;
+      const safePage = Math.max(0, Math.min(data.pageable.pageNumber, totalPages - 1));
+      const safeSize = Math.min(data.pageable.pageSize, 50);
+
+      const currentParams = this.route.snapshot.queryParams;
+
+      if (
+        +currentParams['page'] !== safePage ||
+        +currentParams['size'] !== safeSize
+      ) {
+        this.router.navigate([], {
+            queryParams: {page: safePage, size: safeSize},
+            queryParamsHandling: "merge",
+            replaceUrl: true
+          },  
+        )
+      }
+
       this.topics = data.content || [];
       this.totalElements = data.totalElements || 0;
       this.pageIndex = data.pageable.pageNumber;

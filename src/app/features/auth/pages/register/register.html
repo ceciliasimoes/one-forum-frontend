@@ -1,0 +1,151 @@
+<div class="container" role="main" aria-labelledby="register-title">
+  <div class="left">
+    <div class="box">
+      <h1 id="register-title">Crie sua conta</h1>
+      <p id="register-subtitle" class="subtitle">Inscreva-se para começar</p>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        aria-labelledby="register-title"
+        aria-describedby="register-subtitle"
+        novalidate
+      >
+        <label class="avatar-upload" for="avatar-input">
+          <input
+            id="avatar-input"
+            type="file"
+            accept="image/*"
+            (change)="onPhotoSelected($event)"
+            aria-label="Selecionar foto de perfil"
+          />
+
+          @if (photoPreview()) {
+          <img
+            [src]="photoPreview()"
+            class="avatar-image"
+            alt="Prévia da foto de perfil selecionada"
+          />
+          } @else {
+          <div class="avatar-placeholder" aria-hidden="true">Upload</div>
+          }
+        </label>
+
+        <div class="row" role="group" aria-label="Nome">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Primeiro nome</mat-label>
+            <input
+              matInput
+              formControlName="firstName"
+              autocomplete="given-name"
+              required
+            />
+            @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
+            <mat-error id="first-name-error">O primeiro nome é obrigatório.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Sobrenome</mat-label>
+            <input
+              matInput
+              formControlName="lastName"
+              autocomplete="family-name"
+              required
+            />
+            @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
+            <mat-error id="last-name-error">O sobrenome é obrigatório.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            inputmode="email"
+            required
+          />
+          @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+          <mat-error id="email-required">O email é obrigatório.</mat-error>
+          } @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+          <mat-error id="email-invalid">Informe um email válido.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            autocomplete="new-password"
+            aria-describedby="password-help"
+            required
+          />
+
+          @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+          <mat-error id="password-required" aria-live="polite">A senha é obrigatória.</mat-error>
+          } @if (form.get('password')?.hasError('strongPassword') && form.get('password')?.touched) {
+          <mat-error id="password-strong" aria-live="polite">
+            A senha deve ter 6 a 8 caracteres, incluir minúscula, maiúscula, número e símbolo.
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Confirmar senha</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="confirmPassword"
+            autocomplete="new-password"
+            required
+          />
+
+          @if (form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.touched) {
+          <mat-error id="confirm-required" aria-live="polite">Confirme sua senha.</mat-error>
+          } @if (form.errors?.['passwordsMismatch'] && form.get('confirmPassword')?.touched) {
+          <mat-error id="confirm-mismatch" aria-live="polite">As senhas não coincidem.</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          color="primary"
+          class="full"
+          [disabled]="loading()"
+          type="submit"
+          aria-busy="{{ loading() }}"
+        >
+          {{ loading() ? 'Criando...' : 'Cadastro' }}
+        </button>
+      </form>
+
+      <p class="login-text">
+        Já possui uma conta?
+        <button
+          mat-button
+          color="primary"
+          (click)="goToLogin()"
+          aria-label="Ir para a página de login"
+        >
+          Sign in
+        </button>
+      </p>
+    </div>
+  </div>
+
+  <div class="right" role="complementary" aria-labelledby="community-title">
+    <div class="overlay">
+      <h2 id="community-title">Junte-se à nossa comunidade!</h2>
+      <p>
+        Faça parte da comunidade Oracle Next Education. Aprenda, compartilhe e cresça com milhares
+        de estudantes.
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,31 @@
-<div class="container">
-  <span>
-    <button matButton style="color: #0f172a" (click)="backToPreviousPage()">
-      <mat-icon style="color: #0f172a">keyboard_backspace</mat-icon> Back to Questions
+<main class="container">
+  <nav aria-label="Navegação principal">
+    <button mat-button type="button" (click)="redirect()" aria-label="Voltar para a página inicial">
+      <mat-icon aria-hidden="true">keyboard_backspace</mat-icon>
+      <span>Home</span>
     </button>
-  </span>
+  </nav>
 
-  <topic-card [topic]="topic()"></topic-card>
+  <section aria-label="Detalhes do tópico">
+    <topic-card
+      [topic]="topic()"
+      [answers]="answers().length"
+      [attr.aria-label]="'Tópico: ' + (topic().title || '')">
+    </topic-card>
+  </section>
 
-  <answers-container></answers-container>
+  <section aria-label="Lista de respostas" [attr.aria-live]="'polite'">
+    <answers-container
+      [answers]="answers()"
+      (deleteAnswer)="removeAnswer($event)">
+    </answers-container>
+  </section>
 
-  <answer-form (submitAnswer)="onSubmitAnswer($event)"></answer-form>
-</div>
+  <section aria-label="Formulário de resposta">
+    <answer-form
+      role="form"
+      (submitAnswer)="onSubmitAnswer($event)">
+    </answer-form>
+  </section>
+</main>
+ 

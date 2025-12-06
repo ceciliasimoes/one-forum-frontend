@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, output, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,9 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './answer-form.css',
 })
 export class AnswerForm {
-  text = '';
-
-  @Output() submitAnswer = new EventEmitter<string>();
+  public submitAnswer = output<string>();
+  protected text = '';
 
   submit() {
     if (!this.text.trim()) return;

@@ -12,7 +12,7 @@
                 </button>
                 <button 
                     [matButton]="this.activeAuthorFilter() === 'user' ? 'filled' : 'text'" 
-                    [disabled]="" 
+                    [disabled]="!(this.authService.isLogged$ | async)" 
                     (click)="updateAuthorFilter('user')">
                         Meus tópicos
                 </button>

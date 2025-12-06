@@ -10,7 +10,7 @@ import { Category } from '../../features/home/model/category.model';
 export class CategoryService {
     private readonly httpClient: HttpClient;
 
-    private readonly endpoint = environment.api + "/categories";
+    private readonly endpoint = environment.apiBaseUrl + "/categories";
 
     constructor(httpClient: HttpClient) {
       this.httpClient = httpClient;
