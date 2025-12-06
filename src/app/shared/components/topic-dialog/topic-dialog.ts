@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,6 @@ export interface QuestionData {
 @Component({
   selector: 'app-topic-dialog',
   imports: [
-    CommonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatChipsModule,
@@ -28,7 +27,7 @@ export interface QuestionData {
     FormsModule,
     ReactiveFormsModule,
     MatIconModule
-  ],
+],
   templateUrl: './topic-dialog.html',
   styleUrls: ['./topic-dialog.css'],
 })

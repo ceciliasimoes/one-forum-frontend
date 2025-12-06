@@ -10,13 +10,13 @@ import { Topic } from '../../../../core/models/topics';
 import { Location } from '@angular/common';
 import { CommentsService } from '../../../../core/services/comemments.service';
 import { interval, Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import { AnsWer } from '../../../../core/models/comments';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'topic-detail',
-  imports: [CommonModule, TopicCard, AnswerForm, MatButtonModule, MatIconModule, AnswersContainer],
+  imports: [TopicCard, AnswerForm, MatButtonModule, MatIconModule, AnswersContainer],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topic-detail.html',
   styleUrls: ['./topic-detail.css'],

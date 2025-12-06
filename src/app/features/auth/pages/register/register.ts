@@ -12,7 +12,7 @@ import { MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/mate
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { passwordsMatch, strongPassword } from '../../../../core/validators/passwordValidators';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../../core/services/auth.service';
 import { RegisterRequest } from '../../../../core/models/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,9 +24,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

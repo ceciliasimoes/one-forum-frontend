@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../../core/services/auth.service';
 import { ChangeDetectionStrategy, computed, WritableSignal } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -18,9 +18,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule,
     MatSnackBarModule
-  ],
+],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
