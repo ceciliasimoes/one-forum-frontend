@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Edite suas informações</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Nome de Usuário</mat-label>
+        <input matInput type="text" required [(ngModel)]="user().profile.name">
+    </mat-form-field><br>
+    
+    <mat-form-field>
+        <mat-label>Url da foto de perfil</mat-label>
+        <input matInput type="url" required [(ngModel)]="user().profile.photo">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton (click)="cancelar()">Cancelar</button>
+    <button matButton="filled" (click)="enviar()">Enviar</button>
+</mat-dialog-actions>

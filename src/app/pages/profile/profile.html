@@ -1,0 +1,139 @@
+<html>
+<app-topbar></app-topbar>
+<h1 class="title">Minha conta</h1>
+<h2 class="subtitle">Gerencie as informações do seu pefil</h2>
+
+<div class="container">
+    <section class="user">
+        <!--Usuário-->
+        <mat-card class="user_profile">
+            <img mat-card-image class="avatar" [src]="user().profile.photo">
+            <mat-card-header class="title_card">{{user().profile.name}}</mat-card-header>
+            <span class="details">{{user().email}}</span>
+        </mat-card>
+
+        <!--Atividades-->
+        <mat-card>
+            <mat-card-header>Minha atividade</mat-card-header>
+            <div class="activity">
+                <mat-icon class="activity_icon topics">description</mat-icon>
+                <div>
+                    <span class="activity_title">Meus tópicos</span>
+                    <p class="activity_data">20</p>
+                </div>
+            </div>
+
+            <div class="activity">
+                <mat-icon class="activity_icon comment">comment</mat-icon>
+                <div>
+                    <span class="activity_title">Meus comentários</span>
+                    <p class="activity_data">20</p>
+                </div>
+            </div>
+
+            <div class="activity">
+                <mat-icon class="activity_icon likes">thumb_up</mat-icon>
+                <div>
+                    <span class="activity_title">Total de likes</span>
+                    <p class="activity_data">20</p>
+                </div>
+            </div>
+        </mat-card>
+    </section>
+
+    <section class="settings">
+        <!--Informações-->
+        <mat-card>
+            <div class="information_header">
+                <mat-card-header>Informações do perfil</mat-card-header>
+                <button matButton="outlined" (click)="openDialog(user().id)"><mat-icon>edit</mat-icon>Editar</button>
+            </div>
+            <div class="information_body">
+                <span>Nome de Usuário</span>
+                <p class="information_data">{{user().profile.name}}</p>
+                <span>Url da foto de perfil</span>
+                <p class="information_data">{{user().profile.photo}}</p>
+            </div>
+        </mat-card>
+
+        <!--Segurança-->
+        <mat-card>
+            <div class="header_icon">
+                <mat-icon class="activity_icon security">lock</mat-icon>
+                <div>
+                    <mat-card-header>Segurança</mat-card-header>
+                    <span class="details">Gerencie sua senha</span>
+                </div>
+            </div>
+            <button matButton="outlined" class="profile_button">Alterar Senha</button>
+        </mat-card>
+
+        <!--Configurações-->
+        <mat-card>
+            <div class="header_icon">
+                <mat-icon class="activity_icon topics">settings</mat-icon>
+                <div>
+                    <mat-card-header>Configurações gerais</mat-card-header>
+                    <span class="details">Customise sua experiência</span>
+                </div>
+            </div> <br>
+
+            <div class="header_icon">
+                <mat-icon >notifications</mat-icon>
+                <p>Notificações</p>
+            </div>
+            <div class="config">
+                <div>
+                    <p>Notificações no E-mail</p>
+                    <span class="details">Receba atualizações no e-mail quando chegarem novos posts</span>
+                </div>
+                <mat-slide-toggle></mat-slide-toggle>
+            </div>
+            <div class="config">
+                <div>
+                    <p>Notificações no Navegador</p>
+                    <span class="details">Receba notificações pelo seu navegador</span>
+                </div>
+                <mat-slide-toggle></mat-slide-toggle>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="header_icon">
+                <mat-icon>palette</mat-icon>
+                <p> Aparência</p>
+            </div>
+            <mat-form-field>
+                <mat-label>Tema</mat-label>
+                <mat-select value="Sistema">
+                    <mat-option value="Sistema">Sistema</mat-option>
+                    <mat-option value="Claro">Claro</mat-option>
+                    <mat-option value="Escuro">Escuro</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <span class="details">Escolha seu tema preferido</span>
+
+            <mat-divider></mat-divider>
+
+            <div class="header_icon">
+                <mat-icon>language</mat-icon>
+                <p> Idioma</p>
+            </div>
+            <mat-form-field>
+                <mat-label>Idioma preferido</mat-label>
+                <mat-select value="Português(Brasil)">
+                    <mat-option value="Português(Brasil)">Português(Brasil)</mat-option>
+                    <mat-option value="Inglês">Inglês</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <span class="details">Escolha seu idioma preferido</span>
+        </mat-card>
+
+        <!--Sair-->
+        <mat-card>
+            <mat-card-header>Sair do perfil</mat-card-header>
+            <button matButton="outlined" class="profile_button">Sair</button>
+        </mat-card>
+    </section>
+</div>
+</html>

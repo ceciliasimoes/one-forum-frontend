@@ -1,0 +1,134 @@
+html{
+    background-color: #F9FAFB;
+    margin: 0;
+    height: 100%;
+}
+
+.title{
+    font-size: 24px;
+    font-weight: normal;
+    margin: 20px;
+}
+
+.subtitle{
+    font-size: 16px;
+    font-weight: normal;
+    color: #4A5565;
+    margin: 20px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 20rem 56rem;
+    justify-content: center;
+}
+
+mat-card{
+    margin: 20px 30px;
+    background-color: #ffffff;
+    padding: 24px;
+}
+
+mat-card-header{
+    font-size: 18px;
+    color: #0a0a0a;
+    padding: 0;
+}
+
+/*Perfil do usuário*/
+.user_profile{
+    align-items: center;
+}
+
+.avatar{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    margin-bottom: 18px;
+}
+
+/*Atividades*/
+.activity{
+    display: flex;
+    align-items: center;
+    height: 72px;
+    margin: 16px 0;
+}
+
+.activity_icon{
+    size: 20px;
+    padding: 10px;
+    border-radius: 100%;
+    margin-right: 12px;
+}
+
+.topics{
+    background-color: #DBEAFE;
+    color: #155DFC;
+}
+
+.comment{
+    background-color: #DCFCE7;
+    color: #00A63E;
+}
+
+.likes{
+    background-color: #F3E8FF;
+    color: #9810FA;
+}
+
+.activity_title{
+    font-size: 14px;
+    color: #4A5565;
+}
+
+.activity_data{
+    font-size: 18px;
+    margin: 5px;
+}
+
+/*Configurações*/
+.information_header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.information_data{
+    padding: 12px;
+    background-color: #f3f3f5;
+    color: #575656;
+    border-radius: 8px;
+}
+
+.details{
+    font-size: 14px;
+    color: #6A7282;
+}
+
+/*Segurança*/
+.header_icon{
+    display: flex;
+    align-items: center;
+}
+
+.security{
+    background-color: #FFE2E2;
+    color: #E7000B;
+}
+
+.profile_button{
+    width: fit-content;
+    margin-top: 24px;
+}
+
+.config{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 12px;
+    margin: 15px 0 0 22px;
+}
+
+mat-divider{
+    margin: 24px 0;
+}
