@@ -48,11 +48,9 @@ export class TopicListCard {
     .subscribe(data => {
       if (data.matches) {
         this.isHandheld.set(true);
-        console.log(this.isHandheld())
         return;
       }
       this.isHandheld.set(false);
-      console.log(this.isHandheld())
     })
   }
 

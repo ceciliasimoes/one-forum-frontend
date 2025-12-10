@@ -1,8 +1,25 @@
 <mat-toolbar>
-    <a routerLink="/">
-        <img src="assets/ONE.png" class="img_topbar" alt="logo"  height="45">
-    </a>
-    <a routerLink="profile/{{loggedUser}}">
-        <img src="assets/UserProfilePhoto.png" class="img_topbar" alt="profile_photo" height="40">
-    </a>
+    <div class="container">
+        <h1>
+            <a routerLink="/">
+                <span class="visually-hiden">One Forum</span>
+                <div class="logo-container">
+                    <img src="assets/ONE.png" class="img_topbar" alt="">
+                </div>
+            </a>
+        </h1>
+        <a [routerLink]="isLogged() ? '/profile' : '/login'" class="pfp-container">
+            @if (isLogged()) {
+                @if (this.currentUser()?.profilePhoto !== '') {
+                    <img [src]="this.currentUser()?.profilePhoto" alt="your profile picture">
+                }
+                @else {
+                    <span>{{this.getUserInitials()}}</span>
+                }
+            }
+            @else {
+                <mat-icon>person</mat-icon>
+            }
+        </a>
+    </div>
 </mat-toolbar>

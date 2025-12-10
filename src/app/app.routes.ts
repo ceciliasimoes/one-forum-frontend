@@ -4,7 +4,7 @@ import { Home } from './pages/home/home';
 
 export const routes: Routes = [
   {
-    path: 'profile/:id',
+    path: 'profile',
     component: Profile,
     title: 'Profile'
   },
@@ -31,5 +31,9 @@ export const routes: Routes = [
     path: 'confirm-account',
     loadComponent: () =>
       import('./pages/confirm-account-alert/confirm-account-alert').then((m) => m.ConfirmAccountAlert),
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];

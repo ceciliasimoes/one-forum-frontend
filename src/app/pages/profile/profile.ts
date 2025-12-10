@@ -11,11 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../core/models/user';
 import { userService } from '../../core/services/user';
 import { EditDialog } from '../../components/edit-dialog/edit-dialog';
-import { Topbar } from "../../components/topbar/topbar";
 
 @Component({
   selector: 'app-profile',
-  imports: [MatCardModule, MatIconModule, MatButtonModule, MatInputModule, MatSlideToggleModule, MatDivider, MatSelectModule, Topbar],
+  imports: [MatCardModule, MatIconModule, MatButtonModule, MatInputModule, MatSlideToggleModule, MatDivider, MatSelectModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
