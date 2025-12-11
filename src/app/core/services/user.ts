@@ -1,21 +1,21 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 import { User, UserEditRequest } from "../models/user";
 
 @Injectable({
     providedIn: "root",
 })
-export class userService{
-    constructor(private http:HttpClient) {}
+export class UserService {
+    private readonly http = inject(HttpClient);
+    private readonly apiUrl = `${environment.apiBaseUrl}/users`;
 
-    private api = "http://localhost:8080/users"
-
-    getUser(id: number): Observable<User>{
-        return this.http.get<User>(`${this.api}/${id}`)
+    getUser(id: number): Observable<User> {
+        return this.http.get<User>(`${this.apiUrl}/${id}`);
     }
 
-    editUser(id: number, data: UserEditRequest): Observable<User>{
-        return this.http.patch<User>(`${this.api}/${id}`, data)
+    editUser(id: number, data: UserEditRequest): Observable<User> {
+        return this.http.patch<User>(`${this.apiUrl}/${id}`, data);
     }
 }

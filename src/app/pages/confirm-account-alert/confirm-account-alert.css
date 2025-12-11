@@ -11,3 +11,107 @@
 .animate-fadeIn {
   animation: fadeIn 0.4s ease-out;
 }
+
+/* === LAYOUT PRINCIPAL === */
+.bg-page {
+  background-color: #f3f4f6; /* gray-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* === CARD === */
+.card {
+  background: #ffffff;
+  border-radius: 1rem; /* rounded-2xl */
+  padding: 2rem;
+  max-width: 24rem; /* max-w-sm */
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-xl */
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* === ANIMAÇÃO === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === WRAPPER DOS BLOCOS === */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* space-y-4 */
+}
+
+/* === ÍCONES CÍRCULOS === */
+.icon-circle {
+  width: 5rem; /* w-20 */
+  height: 5rem; /* h-20 */
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estados */
+.icon-success {
+  background-color: #dcfce7; /* green-100 */
+}
+.icon-error {
+  background-color: #fee2e2; /* red-100 */
+}
+
+.icon-success svg {
+  color: #16a34a; /* green-600 */
+}
+
+.icon-error svg {
+  color: #dc2626; /* red-600 */
+}
+
+/* === TEXTOS === */
+.title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600;
+  color: #1f2937; /* gray-800 */
+}
+
+.text {
+  color: #4b5563; /* gray-600 */
+}
+
+/* === BOTÃO === */
+.btn {
+  background: #0f172a;
+  color: white;
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+}
+
+.btn:hover {
+  background: #1e293b;
+}
+
+.btn mat-icon {
+  font-size: 18px;
+}

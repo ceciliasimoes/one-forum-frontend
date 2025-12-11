@@ -26,7 +26,9 @@ export class AuthService {
 
   private readonly baseUrl = environment.apiBaseUrl;
 
-  private readonly isLoggedSubject = new BehaviorSubject<boolean>(!!this.tokenService.getAccessToken());
+  private readonly isLoggedSubject = new BehaviorSubject<boolean>(
+    !!this.tokenService.getAccessToken()
+  );
   readonly isLogged$ = this.isLoggedSubject.asObservable();
 
   readonly currentUser = signal<User | null>(null);
@@ -39,7 +41,7 @@ export class AuthService {
     const id = this.tokenService.getUserId();
     if (!id) return;
 
-    this.fetchUser(id).subscribe(user => this.currentUser.set(user));
+    this.fetchUser(id).subscribe((user) => this.currentUser.set(user));
   }
 
   fetchUser(id: number): Observable<User> {
@@ -58,20 +60,23 @@ export class AuthService {
 
   login(data: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, data).pipe(
-      tap(res => {
+      tap((res) => {
         this.tokenService.saveTokens(res.accessToken, res.refreshToken);
         this.isLoggedSubject.next(true);
 
         const id = this.tokenService.getUserId();
         if (id) {
-          this.fetchUser(id).subscribe(user => this.currentUser.set(user));
+          this.fetchUser(id).subscribe((user) => this.currentUser.set(user));
         }
       })
     );
   }
 
-  requestConfirmAccount(token: string): Observable<{status: string, message: string}> {
-    return this.http.post<{status: string, message: string}>(`${this.baseUrl}/auth/confirm-account`, { token });
+  requestConfirmAccount(token: string): Observable<{ status: string; message: string }> {
+    return this.http.post<{ status: string; message: string }>(
+      `${this.baseUrl}/auth/confirm-account`,
+      { token }
+    );
   }
 
   logout(): void {

@@ -1,16 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateComment } from '../models/comments';
 import { environment } from '../../../environments/environment';
+import { CreateComment } from '../models/comments';
 
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
-  private readonly baseUrl: string;
-
-  constructor(private readonly http: HttpClient) {
-    this.baseUrl = `${environment.apiBaseUrl}/topics`;
-  }
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = `${environment.apiBaseUrl}/topics`;
 
   create(topicId: number, dto: CreateComment): Observable<Comment> {
     return this.http.post<Comment>(

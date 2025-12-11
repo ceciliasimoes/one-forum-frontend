@@ -1,8 +1,8 @@
-<div class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-sm w-full text-center animate-fadeIn">
-    <div class="flex flex-col items-center space-y-4">
+<div class="bg-page">
+  <div class="card">
+    <div class="card-content">
       @if (!notIsConfirmed()) {
-      <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+      <div class="icon-circle icon-success">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -15,15 +15,14 @@
         </svg>
       </div>
 
-      <div>
-        <h1 class="text-2xl font-semibold text-gray-800">E-mail confirmado!</h1>
-        <p class="text-gray-600">
-          Seu e-mail foi verificado com sucesso. Agora você já pode aproveitar todos os recursos.
-        </p>
-      </div>
+      <h1 class="title">E-mail confirmado!</h1>
+      <p class="text">
+        Seu e-mail foi verificado com sucesso. Agora você já pode aproveitar todos os recursos.
+      </p>
 
       } @else {
-      <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+
+      <div class="icon-circle icon-error">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -36,11 +35,11 @@
         </svg>
       </div>
 
-      <h1 class="text-2xl font-semibold text-gray-800">Você precisa ativar sua conta.</h1>
-      <p class="text-gray-600">Se não recebeu o e-mail de ativação, clique no botão abaixo para receber.</p>
-      <button
-        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        (click)="resendConfirmationEmail()">RECEBER E-MAIL DE CONFIRMAÇÃO</button>
+      <h1 class="title">Você precisa ativar sua conta.</h1>
+      <p class="text">Se não recebeu o e-mail de ativação, clique no botão abaixo para receber.</p>
+
+      <button class="btn" (click)="resendConfirmationEmail()">RECEBER E-MAIL DE CONFIRMAÇÃO</button>
+
       }
     </div>
   </div>
