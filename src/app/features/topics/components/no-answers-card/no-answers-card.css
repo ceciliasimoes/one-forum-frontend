@@ -1,8 +1,8 @@
 .no-answers {
   margin-top: 1rem;
   padding: 2rem 1rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
 
   display: flex;

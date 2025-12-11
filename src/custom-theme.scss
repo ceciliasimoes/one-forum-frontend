@@ -6,7 +6,8 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-html {
+// Tema Claro
+html.light-theme {
   @include mat.theme((
     color: (
       primary: mat.$azure-palette,
@@ -15,14 +16,53 @@ html {
     typography: Roboto,
     density: 0,
   ));
+  
+  color-scheme: light;
+  
+  // Variáveis customizadas para tema claro
+  --bg-primary: #F9FAFB;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-color: #e5e7eb;
+  --button-primary-bg: #0f172a;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #e5e7eb;
+  --button-secondary-text: #0f172a;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+// Tema Escuro
+html.dark-theme {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+  
+  color-scheme: dark;
+  
+  // Variáveis customizadas para tema escuro
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --border-color: #334155;
+  --button-primary-bg: #3b82f6;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #334155;
+  --button-secondary-text: #f8fafc;
+  --card-shadow: rgba(0, 0, 0, 0.3);
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
@@ -32,4 +72,5 @@ body {
 
   // Reset the user agent margin.
   margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

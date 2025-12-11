@@ -53,6 +53,57 @@ export interface ConfirmDialogData {
 
     mat-dialog-actions {
       padding-top: 16px;
+      gap: 8px;
+    }
+
+    button[mat-button] {
+      background: #e5e7eb;
+      color: #0f172a;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[mat-button]:hover {
+      background: #d1d5db;
+    }
+
+    button[mat-raised-button] {
+      background: #0f172a;
+      color: white;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[mat-raised-button]:hover {
+      background: #1e293b;
+    }
+
+    button[mat-raised-button][color="warn"] {
+      background: #dc2626;
+    }
+
+    button[mat-raised-button][color="warn"]:hover {
+      background: #b91c1c;
+    }
+
+    button mat-icon {
+      font-size: 18px;
     }
   `]
 })

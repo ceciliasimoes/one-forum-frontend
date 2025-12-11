@@ -19,6 +19,28 @@
   align-items: center;
 }
 
+.tag-box button,
+.category-box button {
+  background: #0f172a;
+  color: white;
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  height: 40px;
+}
+
+.tag-box button:hover,
+.category-box button:hover {
+  background: #1e293b;
+}
+
 .tag-input {
   flex: 1;
 }
@@ -39,14 +61,30 @@
     align-items: center;
     gap: 6px;
     text-transform: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    mat-icon {
+      font-size: 18px;
+    }
 
     &.submit-btn {
       background: #0f172a;
       color: white;
+
+      &:hover {
+        background: #1e293b;
+      }
     }
+    
     &.cancel-btn {
       background: #e5e7eb;
       color: #0f172a;
+
+      &:hover {
+        background: #d1d5db;
+      }
     }
   }
 }

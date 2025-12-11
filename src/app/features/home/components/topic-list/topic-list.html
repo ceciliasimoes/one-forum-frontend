@@ -6,12 +6,14 @@
         <div class="top-actions">
             <div class="ownership-filter-toggle">
                 <button 
-                    [matButton]="this.activeAuthorFilter() === 'all' ? 'filled' : 'text'" 
+                    [class.btn-filled]="this.activeAuthorFilter() === 'all'"
+                    [class.btn-text]="this.activeAuthorFilter() !== 'all'"
                     (click)="updateAuthorFilter('all')">
                         <span>Todos</span>
                 </button>
                 <button 
-                    [matButton]="this.activeAuthorFilter() === 'user' ? 'filled' : 'text'" 
+                    [class.btn-filled]="this.activeAuthorFilter() === 'user'"
+                    [class.btn-text]="this.activeAuthorFilter() !== 'user'"
                     [disabled]="!(this.authService.isLogged$ | async)" 
                     (click)="updateAuthorFilter('user')">
                         Meus tópicos
@@ -19,13 +21,15 @@
             </div>
             <div class="sort-options">
                 <button 
-                    [matButton]="this.activeSort() === 'date' ? 'filled' : 'text'"
+                    [class.btn-filled]="this.activeSort() === 'date'"
+                    [class.btn-text]="this.activeSort() !== 'date'"
                     (click)="updateSortList('date')">
                         <mat-icon>schedule</mat-icon>
                         <span>Mais recente</span>
                 </button>
                 <button 
-                    [matButton]="this.activeSort() === 'moreLiked' ? 'filled' : 'text'"
+                    [class.btn-filled]="this.activeSort() === 'moreLiked'"
+                    [class.btn-text]="this.activeSort() !== 'moreLiked'"
                     (click)="updateSortList('moreLiked')">
                         <mat-icon>thumb_up</mat-icon>
                         <span>Mais curtido</span>

@@ -15,6 +15,7 @@
       max-width: 380px;
 
       h1 {
+        color: #0f172a;
         margin-bottom: 8px;
       }
 
@@ -102,4 +103,56 @@
     color: #666;
     text-align: center;
   }
+}
+
+button[type="submit"],
+.btn-primary {
+  background: #0f172a;
+  color: white;
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  height: 48px;
+}
+
+button[type="submit"]:hover,
+.btn-primary:hover {
+  background: #1e293b;
+}
+
+button[type="submit"]:disabled,
+.btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+button[type="submit"] mat-icon,
+.btn-primary mat-icon {
+  font-size: 18px;
+}
+
+.login-text button {
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.login-text button:hover {
+  background: #f1f5f9;
 }

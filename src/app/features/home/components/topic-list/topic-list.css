@@ -22,10 +22,68 @@
 
 .ownership-filter-toggle {
     width: fit-content;
-
     display: flex;
-    background: #ECECF0;
-    border-radius: 2rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.sort-options {
+    display: flex;
+    gap: 8px;
+}
+
+.ownership-filter-toggle button,
+.sort-options button {
+    padding: 6px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.btn-filled {
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-filled:hover {
+    opacity: 0.9;
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--text-primary);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-text:hover {
+    background: var(--bg-tertiary);
+}
+
+.ownership-filter-toggle button:disabled,
+.sort-options button:disabled {
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.ownership-filter-toggle button:disabled:hover,
+.sort-options button:disabled:hover {
+    background: transparent;
+}
+
+button mat-icon {
+    font-size: 18px;
 }
 
 .message-topic-list-container {

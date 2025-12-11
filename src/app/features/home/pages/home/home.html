@@ -1,17 +1,24 @@
 <div class="container">
-    <div class="nav-and-actions">
-        <div class="buttons-row">
-            <div class="nav-buttons-container">
-                <button matButton="filled">
-                    <mat-icon>tab</mat-icon>
-                    <span>Feed</span>
-                </button>
-            </div>
-            <button matButton="elevated" [disabled]="!(this.authService.isLogged$ | async)" (click)="createTopicBtnClick()">Criar tópico</button>
-        </div>
-        <app-search-bar placeholder="Pesquise por título ou nome do autor"></app-search-bar>
+  <nav class="nav-and-actions" aria-label="Navegação e ações principais">
+    <div class="buttons-row">
+      <div class="nav-buttons-container" role="group" aria-label="Navegação de visualização">
+        <button matButton="filled" aria-label="Visualizar feed de tópicos" aria-current="page">
+          <mat-icon aria-hidden="true">tab</mat-icon>
+          <span>Feed</span>
+        </button>
+      </div>
+      <button
+        matButton="elevated"
+        [disabled]="!(authService.isLogged$ | async)"
+        (click)="openCreateTopicDialog()"
+        aria-label="Criar novo tópico"
+      >
+        Criar tópico
+      </button>
     </div>
-    <div>
-        <app-topic-list></app-topic-list>
-    </div>
+    <app-search-bar placeholder="Pesquise por título ou nome do autor"></app-search-bar>
+  </nav>
+  <main aria-label="Lista de tópicos">
+    <app-topic-list></app-topic-list>
+  </main>
 </div>

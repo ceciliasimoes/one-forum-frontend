@@ -7,9 +7,10 @@ mat-card {
     padding-left: 2rem;
     gap: 2rem;
 
-    background: #FFFFFF;
+    background: var(--bg-secondary);
     box-shadow: none;
-    border: 1px solid hsla(0, 0%, 0%, 0.1);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 mat-card:hover {
@@ -75,7 +76,8 @@ mat-card-footer {
     border-radius: 50%;
     overflow: hidden;
 
-    background: #DDDDDD;
+    background: var(--bg-tertiary);
+    transition: background-color 0.3s ease;
 }
 
 .pfp-container img {
@@ -86,7 +88,7 @@ mat-card-footer {
 
 @media (max-width: 959px) {
     .stats-container {
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--border-color);
         padding-top: 1rem;
         flex-direction: row;
         justify-content: flex-start;

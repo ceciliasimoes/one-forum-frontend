@@ -59,6 +59,33 @@
 .btn {
   margin-top: 10px;
   height: 48px;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn mat-icon {
+  font-size: 18px;
 }
 
 .signup {
@@ -68,22 +95,39 @@
 }
 
 .signup button {
-  background: none;
+  background: transparent;
   border: none;
-  color: #2563eb;
+  color: #0f172a;
   cursor: pointer;
   font-weight: 500;
+  text-decoration: underline;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.signup button:hover {
+  background: #f1f5f9;
 }
 
 .forgot {
-  background: none;
+  background: transparent;
   border: none;
-  color: #2563eb;
+  color: #0f172a;
   cursor: pointer;
   font-size: 12px;
   position: absolute;
   right: 0.75rem;
   top: -1.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: underline;
+  transition: background 0.2s;
+}
+
+.forgot:hover {
+  background: #f1f5f9;
 }
 
 .card {

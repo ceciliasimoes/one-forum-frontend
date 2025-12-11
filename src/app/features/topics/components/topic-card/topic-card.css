@@ -1,6 +1,6 @@
 .topic-card {
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   padding: 16px 20px;
   border-radius: 10px;
   display: flex;
@@ -17,7 +17,7 @@
 .topic-header mat-card-title {
   font-size: 20px;
   font-weight: 500;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .action-buttons {
@@ -36,13 +36,13 @@
 }
 
 .tag {
-  background: #eceef2;
+  background: var(--bg-tertiary);
   font-size: 12px;
 }
 
 .topic-text {
   font-size: 15px;
-  color: #334155;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin: 6px 0 18px 0;
 }
