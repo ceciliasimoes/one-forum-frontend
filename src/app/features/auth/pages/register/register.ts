@@ -8,7 +8,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { passwordsMatch, strongPassword } from '../../../../core/validators/passwordValidators';
@@ -43,8 +43,7 @@ export class Register {
 
   public readonly form: FormGroup = this.fb.group(
     {
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, strongPassword()]],
       confirmPassword: ['', Validators.required],
@@ -110,12 +109,9 @@ export class Register {
     this.showMessage('Erro ao enviar foto. Tente novamente.', 'error');
   }
 
-  private buildRegisterPayload(avatarUrl: string): RegisterRequest {
-    const firstName = this.form.value.firstName?.trim() ?? '';
-    const lastName = this.form.value.lastName?.trim() ?? '';
-    
+  private buildRegisterPayload(avatarUrl: string): RegisterRequest {  
     return {
-      name: `${firstName} ${lastName}`.trim(),
+      name: this.form.value.username!.trim(),
       email: this.form.value.email!,
       password: this.form.value.password!,
       matchPassword: this.form.value.password!,
