@@ -31,33 +31,18 @@
           }
         </label>
 
-        <div class="row" role="group" aria-label="Nome">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Primeiro nome</mat-label>
-            <input
-              matInput
-              formControlName="firstName"
-              autocomplete="given-name"
-              required
-            />
-            @if (form.get('firstName')?.hasError('required') && form.get('firstName')?.touched) {
-            <mat-error id="first-name-error">O primeiro nome é obrigatório.</mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Sobrenome</mat-label>
-            <input
-              matInput
-              formControlName="lastName"
-              autocomplete="family-name"
-              required
-            />
-            @if (form.get('lastName')?.hasError('required') && form.get('lastName')?.touched) {
-            <mat-error id="last-name-error">O sobrenome é obrigatório.</mat-error>
-            }
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nome de usuário</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            autocomplete="given-name"
+            required
+          />
+          @if (form.get('username')?.hasError('required') && form.get('username')?.touched) {
+          <mat-error id="username-error">O nome de usuário é obrigatório.</mat-error>
+          }
+        </mat-form-field>
 
         <mat-form-field appearance="outline" class="full">
           <mat-label>Email</mat-label>

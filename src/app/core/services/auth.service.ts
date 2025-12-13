@@ -41,7 +41,12 @@ export class AuthService {
     const id = this.tokenService.getUserId();
     if (!id) return;
 
-    this.fetchUser(id).subscribe((user) => this.currentUser.set(user));
+    this.fetchUser(id).subscribe({
+      next: (user) => this.currentUser.set(user),
+      error: () => {
+        this.logout();
+      }
+    });
   }
 
   fetchUser(id: number): Observable<User> {
