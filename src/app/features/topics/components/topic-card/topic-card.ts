@@ -20,11 +20,11 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { getInitials } from '../../../../shared/utils/string.utils';
 import { ConfirmDialog } from '../../../../shared/components/confirm-dialog/confirm-dialog';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'topic-card',
-  imports: [MatCardModule, MatButtonModule, MatChipsModule, MatIconModule, CommonModule, MatSnackBarModule],
+  imports: [MatCardModule, MatButtonModule, MatChipsModule, MatIconModule, CommonModule, MatSnackBarModule, RouterLink],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topic-card.html',

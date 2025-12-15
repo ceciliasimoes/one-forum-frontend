@@ -5,12 +5,16 @@ html{
     transition: background-color 0.3s ease;
 }
 
+.page-header {
+    margin: 0 auto;
+    padding: 2rem 0 2rem 0;
+    max-width: 72rem;
+}
+
 .title{
     font-size: 24px;
     font-weight: 600;
-    margin: 0 auto;
-    padding: 2rem 0 0.5rem 0;
-    max-width: 72rem;
+    margin-bottom: 0.5rem;
     color: var(--text-primary);
     transition: color 0.3s ease;
 }
@@ -20,7 +24,6 @@ html{
     font-weight: normal;
     color: var(--text-secondary);
     margin: 0 auto;
-    padding: 0 0 2rem 0;
     max-width: 72rem;
     transition: color 0.3s ease;
 }
@@ -257,6 +260,10 @@ mat-divider{
 .btn-primary:disabled {
   opacity: 0.5 !important;
   cursor: not-allowed;
+}
+
+.user-topics-header {
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 1024px) {

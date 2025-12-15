@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../../core/services/token.service';
-import { CommentsService } from '../../../../core/services/comemments.service';
+import { CommentsService } from '../../../../core/services/comments.service';
 import { AnsWer } from '../../../../core/models/comments';
 import { AuthService } from '../../../../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

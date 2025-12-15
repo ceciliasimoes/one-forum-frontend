@@ -1,6 +1,16 @@
-<h2 class="title">Minha conta</h2>
-<p class="subtitle">Gerencie as informações do seu pefil</p>
 
+<div class="page-header">
+  @if (isOwnProfile()) {
+    <h2 class="title">Minha conta</h2>
+    <p class="subtitle">Gerencie as informações do seu pefil</p>
+  }
+  @else {
+    <button mat-button type="button" (click)="return()" aria-label="Voltar para a página anterior">
+      <mat-icon aria-hidden="true">keyboard_backspace</mat-icon>
+      <span>Voltar</span>
+    </button>
+  }
+</div>
 <div class="container">
   <section class="user">
     <!--Usuário-->

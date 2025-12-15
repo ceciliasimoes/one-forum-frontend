@@ -38,7 +38,8 @@
   </mat-chip-set>
 
   <mat-card-content class="topic-content">
-    <p class="topic-text">{{ topic().content }}</p>
+    <!-- <p class="topic-text">{{ topic().content }}</p> -->
+     <div [innerHTML]="topic().content"></div>
   </mat-card-content>
 
   <footer class="topic-footer">
@@ -63,7 +64,7 @@
       </div>
 
       <div class="details">
-        <span class="name">{{ topic().author.profile.name }}</span>
+        <a class="name" [routerLink]="'/profile/' + topic().author.id">{{ topic().author.profile.name }}</a>
 
         <div class="date">
           <mat-icon class="date-icon" aria-hidden="true">calendar_today</mat-icon>

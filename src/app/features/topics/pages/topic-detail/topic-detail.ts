@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TopicService } from '../../../../core/services/topics.service';
 import { Topic } from '../../../../core/models/topics';
 import { Location } from '@angular/common';
-import { CommentsService } from '../../../../core/services/comemments.service';
+import { CommentsService } from '../../../../core/services/comments.service';
 import { interval, Subscription } from 'rxjs';
 
 import { AnsWer } from '../../../../core/models/comments';

@@ -254,4 +254,8 @@ export class Profile {
       }
     })
   }
+
+  return() {
+    this.location.back();
+  }
 }
