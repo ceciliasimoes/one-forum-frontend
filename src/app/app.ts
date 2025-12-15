@@ -1,7 +1,7 @@
-import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Topbar } from "./shared/components/topbar/topbar";
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 
 @Component({
@@ -27,6 +27,7 @@ export class App {
   noTopbarEndpoints: String[] = [
     "/login",
     "/register",
-    "/confirm-account"
+    "/confirm-account",
+    "/splash"
   ]
 }
