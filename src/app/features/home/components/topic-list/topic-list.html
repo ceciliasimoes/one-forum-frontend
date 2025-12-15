@@ -1,50 +1,54 @@
 <div class="container">
-    <aside class="filters-container">
-        <app-filters-card></app-filters-card>
-    </aside>
+    @if (filtersCard()) {
+        <aside class="filters-container">
+            <app-filters-card></app-filters-card>
+        </aside>
+    }
     <div class="main-content-container">
-        <div class="top-actions">
-            <div class="ownership-filter-toggle">
-                <button 
-                    [class.btn-filled]="this.activeAuthorFilter() === 'all'"
-                    [class.btn-text]="this.activeAuthorFilter() !== 'all'"
-                    (click)="updateAuthorFilter('all')">
-                        <span>Todos</span>
-                </button>
-                <button 
-                    [class.btn-filled]="this.activeAuthorFilter() === 'user'"
-                    [class.btn-text]="this.activeAuthorFilter() !== 'user'"
-                    [disabled]="!(this.authService.isLogged$ | async)" 
-                    (click)="updateAuthorFilter('user')">
-                        Meus tópicos
-                </button>
+        @if (topActions()) {
+            <div class="top-actions">
+                <div class="ownership-filter-toggle">
+                    <button 
+                        [class.btn-filled]="this.activeAuthorFilter() === 'all'"
+                        [class.btn-text]="this.activeAuthorFilter() !== 'all'"
+                        (click)="updateAuthorFilter('all')">
+                            <span>Todos</span>
+                    </button>
+                    <button 
+                        [class.btn-filled]="this.activeAuthorFilter() === 'user'"
+                        [class.btn-text]="this.activeAuthorFilter() !== 'user'"
+                        [disabled]="!this.isLogged()" 
+                        (click)="updateAuthorFilter('user')">
+                            Meus tópicos
+                    </button>
+                </div>
+                <div class="sort-options">
+                    <button 
+                        [class.btn-filled]="this.activeSort() === 'date'"
+                        [class.btn-text]="this.activeSort() !== 'date'"
+                        (click)="updateSortList('date')">
+                            <mat-icon>schedule</mat-icon>
+                            <span>Mais recente</span>
+                    </button>
+                    <button 
+                        [class.btn-filled]="this.activeSort() === 'moreLiked'"
+                        [class.btn-text]="this.activeSort() !== 'moreLiked'"
+                        (click)="updateSortList('moreLiked')">
+                            <mat-icon>thumb_up</mat-icon>
+                            <span>Mais curtido</span>
+                    </button>
+                </div>
             </div>
-            <div class="sort-options">
-                <button 
-                    [class.btn-filled]="this.activeSort() === 'date'"
-                    [class.btn-text]="this.activeSort() !== 'date'"
-                    (click)="updateSortList('date')">
-                        <mat-icon>schedule</mat-icon>
-                        <span>Mais recente</span>
-                </button>
-                <button 
-                    [class.btn-filled]="this.activeSort() === 'moreLiked'"
-                    [class.btn-text]="this.activeSort() !== 'moreLiked'"
-                    (click)="updateSortList('moreLiked')">
-                        <mat-icon>thumb_up</mat-icon>
-                        <span>Mais curtido</span>
-                </button>
-            </div>
-        </div>
-        @if (this.statusFlag() === StatusFlagEnum.OK && this.totalElements > 0) {
-            @for (topic of this.topics; track $index) {
+        }
+        @if (this.statusFlag() === StatusFlagEnum.OK && this.totalElements() > 0) {
+            @for (topic of this.topics(); track $index) {
                 <app-topic-card [topic]="topic"></app-topic-card>
             }
             <div class="pages-list">
                 <mat-paginator
-                    [length]="this.totalElements"
-                    [pageIndex]="this.pageIndex"
-                    [pageSize]="this.pageSize"
+                    [length]="this.totalElements()"
+                    [pageIndex]="this.pageIndex()"
+                    [pageSize]="this.pageSize()"
                     [pageSizeOptions]="[5, 10, 25, 50]"
                     [showFirstLastButtons]="true"
                     (page)="updatePage($event)"

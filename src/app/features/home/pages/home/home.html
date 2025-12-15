@@ -9,7 +9,7 @@
       </div>
       <button
         matButton="elevated"
-        [disabled]="!(authService.isLogged$ | async)"
+        [disabled]="!isLogged()"
         (click)="openCreateTopicDialog()"
         aria-label="Criar novo tópico"
       >
@@ -19,6 +19,18 @@
     <app-search-bar placeholder="Pesquise por título ou nome do autor"></app-search-bar>
   </nav>
   <main aria-label="Lista de tópicos">
-    <app-topic-list></app-topic-list>
+    <app-topic-list 
+      [isLogged]="isLogged() ?? false" 
+      [statusFlag]="statusFlag()"
+      [topics]="topics()"
+      [totalElements]="totalElements()"
+      [pageIndex]="pageIndex()"
+      [pageSize]="pageSize()"
+      [activeSort]="activeSort()"
+      [activeAuthorFilter]="activeAuthorFilter()"
+      (authorFilterChange)="handleAuthorFilterChange($event)"
+      (sortListChange)="handleSortListChange($event)"
+      (paginationChange)="handlePaginationChange($event)"
+    ></app-topic-list>
   </main>
 </div>

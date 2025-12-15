@@ -6,11 +6,11 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatChipOption, MatChipSelectionChange, MatChipsModule } from "@angular/material/chips";
 import { MatButtonModule } from '@angular/material/button';
 import { Category } from '../../../../core/models/category.model';
-import { HomeService } from '../../../../core/services/home.service';
 import { StatusFlag } from '../../../../core/models/status-flag.model';
 import { tap } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { TopicListService } from '../../../../core/services/topic-list.service';
 
 @Component({
   selector: 'app-filters-card',
@@ -26,7 +26,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class FiltersCard {
   private readonly categoryService = inject(CategoryService);
-  private readonly homeService = inject(HomeService);
+  private readonly topicListService = inject(TopicListService);
   private readonly destroyRef = inject(DestroyRef);
   readonly statusFlagEnumm = StatusFlag;
   private readonly breakpointObserver = inject(BreakpointObserver);
@@ -48,7 +48,7 @@ export class FiltersCard {
     { initialValue: [] as Category[] }
   );
 
-  private filtersSignal = toSignal(this.homeService.filters$);
+  private filtersSignal = toSignal(this.topicListService.homeFilters$);
   
   ngOnInit() {
     this.breakpointObserver.observe(
@@ -103,9 +103,9 @@ export class FiltersCard {
 
   selectFilter(event: MatChipSelectionChange, categoryId: number) {
     if (event.selected) {
-      this.homeService.setFilters({category: categoryId});
+      this.topicListService.setHomeFilters({category: categoryId});
       return;
     }
-    this.homeService.setFilters({category: undefined});
+    this.topicListService.setHomeFilters({category: undefined});
   }
 }

@@ -2,8 +2,8 @@ import { Component, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
-import { HomeService } from '../../../../core/services/home.service';
 import { Subscription } from 'rxjs';
+import { TopicListService } from '../../../../core/services/topic-list.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './search-bar.css',
 })
 export class SearchBar {
-  homeService = inject(HomeService);
+  topicListService = inject(TopicListService);
   
   searchFieldValue = "";
   placeholder = input("");
@@ -24,7 +24,7 @@ export class SearchBar {
   initUrlCheckSubscription?: Subscription;
 
   ngOnInit() {
-    this.initUrlCheckSubscription = this.homeService.filters$.subscribe(filters => {
+    this.initUrlCheckSubscription = this.topicListService.homeFilters$.subscribe(filters => {
       this.searchFieldValue = filters.search ?? "";
     })
   }
@@ -35,9 +35,9 @@ export class SearchBar {
 
   enterPressed() {
     if (this.searchFieldValue === '') {
-      this.homeService.setFilters({search: undefined});
+      this.topicListService.setHomeFilters({search: undefined});
       return
     }
-    this.homeService.setFilters({search: this.searchFieldValue})
+    this.topicListService.setHomeFilters({search: this.searchFieldValue})
   }
 }

@@ -1,8 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal, WritableSignal } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../core/services/user';
 import { AuthService, User } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { TopicList } from "../home/components/topic-list/topic-list";
+import { StatusFlag } from '../../core/models/status-flag.model';
+import { Topic } from '../../core/models/topics';
+import { PageEvent } from '@angular/material/paginator';
+import { TopicListService } from '../../core/services/topic-list.service';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +31,8 @@ import { CommonModule } from '@angular/common';
     MatDivider,
     MatSelectModule,
     ReactiveFormsModule,
-  ],
+    TopicList
+],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -34,16 +40,23 @@ import { CommonModule } from '@angular/common';
 export class Profile {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private location = inject(Location);
   private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly userService = inject(UserService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly topicListService = inject(TopicListService);
   protected user: WritableSignal<User> = signal({} as User);
   protected isEditing = signal(false);
   protected photoPreview = signal<string | null>(null);
   protected profileForm!: FormGroup;
   private selectedFile: File | null = null;
   protected isOwnProfile = signal(true);
+
+  topicsStatusFlag = signal(StatusFlag.OK);
+  userTopicsTotalElements = signal(0);
+  userTopics: WritableSignal<Topic[]> = signal([]);
+
 
   constructor() {
     this.profileForm = this.fb.group({
@@ -77,11 +90,13 @@ export class Profile {
     if (currentUser && currentUser.id === userId) {
       this.user.set(currentUser);
       this.isOwnProfile.set(true);
+      this.router.navigate(['/profile']);
     } else {
       this.authService.fetchUser(userId).subscribe({
         next: (userData) => {
           this.user.set(userData);
           this.isOwnProfile.set(false);
+          this.setUserTopics();
         },
         error: (err) => {
           console.error('Erro ao carregar perfil:', err);
@@ -185,6 +200,8 @@ export class Profile {
       profilePhoto: data.photo,
     });
 
+    this.authService.updateUserData();
+
     this.isEditing.set(false);
     this.photoPreview.set(null);
     this.selectedFile = null;
@@ -206,5 +223,35 @@ export class Profile {
     };
 
     this.snackBar.open(message, 'Fechar', config);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  private setUserTopics() {
+    this.topicsStatusFlag.set(StatusFlag.LOADING);
+    this.topicListService.fetchTopics({
+      authorId: this.user().id,
+    }).subscribe({
+      next: data => {
+        this.userTopics.set(data.content);
+        this.userTopicsTotalElements.set(data.totalElements);
+        this.topicsStatusFlag.set(StatusFlag.OK);
+      }
+    })
+  }
+
+  handlePaginationChange(pageEvent: PageEvent) {
+    this.topicListService.fetchTopics({
+      authorId: this.user().id,
+      page: pageEvent.pageIndex,
+      size: pageEvent.pageSize
+    }).subscribe({
+      next: data => {
+        this.userTopics.set(data.content);
+        this.userTopicsTotalElements.set(data.totalElements);
+      }
+    })
   }
 }

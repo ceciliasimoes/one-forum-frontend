@@ -33,6 +33,8 @@ export class AuthService {
 
   readonly currentUser = signal<User | null>(null);
 
+  authCheckCompleted = signal(false);
+
   constructor() {
     this.loadUserOnStart();
   }
@@ -42,11 +44,21 @@ export class AuthService {
     if (!id) return;
 
     this.fetchUser(id).subscribe({
-      next: (user) => this.currentUser.set(user),
+      next: (user) => {
+        this.authCheckCompleted.set(true)
+        return this.currentUser.set(user)
+      },
       error: () => {
         this.logout();
       }
     });
+
+  }
+
+  updateUserData() {
+    this.fetchUser(this.currentUser()!.id).subscribe(
+      data => this.currentUser.set(data)
+    )
   }
 
   fetchUser(id: number): Observable<User> {

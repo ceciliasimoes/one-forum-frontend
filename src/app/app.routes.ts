@@ -3,6 +3,9 @@ import { Profile } from './features/profile/profile';
 import { inject } from '@angular/core';
 import { TokenService } from './core/services/token.service';
 import { Router } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { AuthService } from './core/services/auth.service';
+import { filter, map, take } from 'rxjs';
 
 const redirectIfAuthenticated = () => {
   const tokenService = inject(TokenService);
@@ -26,13 +29,17 @@ const requireAuthentication = () => {
   return true;
 };
 
+const checkUserLoaded = () => {
+  const authService = inject(AuthService);
+  return toObservable(authService.authCheckCompleted)
+  .pipe(
+    filter(value => value === true),
+    take(1),
+    map(() => true)
+  )
+}
+
 export const routes: Routes = [
-   {
-  path: 'publicprofile/:id',
-  loadComponent: () =>
-    import('./pages/public-profile/public-profile').then((m) => m.PublicProfile),
-  title: 'Public Profile'
-  },
   {
     path: 'splash',
     loadComponent: () => import('./features/splash/splash').then((m) => m.Splash),
@@ -42,12 +49,18 @@ export const routes: Routes = [
   {
     path: 'profile/:id',
     component: Profile,
+    resolve: {
+      authData: checkUserLoaded
+    },
     title: 'Perfil de Usuário',
   },
   {
     path: 'profile',
     component: Profile,
     canActivate: [requireAuthentication],
+    resolve: {
+      authData: checkUserLoaded
+    },
     title: 'Meu Perfil',
   },
   {
