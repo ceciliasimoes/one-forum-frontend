@@ -113,8 +113,8 @@ export class CommentCard {
     }
 
     this.commentsService.delete(topicId, commentId).subscribe({
-      next: (res: any) => {
-        const status = res?.status ?? res?.statusCode ?? res?.code;
+      next: (res) => {
+        const status = res.status;
 
         if (status === 204) {
           this.deleteComment.emit();
@@ -124,6 +124,7 @@ export class CommentCard {
             verticalPosition: 'top',
           });
         } else {
+          console.log(status)
           console.error('Failed to delete comment, status:', status);
           this.snackBar.open('Falha ao excluir comentário', 'Fechar', {
             duration: 3000,

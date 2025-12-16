@@ -47,7 +47,7 @@ export class CommentsService {
     );
   }
 
-  delete(topicId: number, id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${topicId}/comments/${id}`);
+  delete(topicId: number, id: number): Observable<{status: number}> {
+    return this.http.delete(`${this.baseUrl}/${topicId}/comments/${id}`, {observe: 'response'});
   }
 }
