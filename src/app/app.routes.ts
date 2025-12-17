@@ -12,7 +12,7 @@ const redirectIfAuthenticated = () => {
   const router = inject(Router);
 
   if (tokenService.getAccessToken()) {
-    router.navigate(['/']);
+    router.navigate(['/home']);
     return false;
   }
   return true;
@@ -41,10 +41,21 @@ const checkUserLoaded = () => {
 
 export const routes: Routes = [
   {
-    path: 'splash',
+    path: '',
     loadComponent: () => import('./features/splash/splash').then((m) => m.Splash),
     canActivate: [redirectIfAuthenticated],
     title: 'Welcome - One Forum',
+  },
+  {
+    path: 'splash',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./features/home/pages/home/home').then((m) => m.Home),
+    canActivate: [requireAuthentication],
+    title: 'Home - One Forum',
   },
   {
     path: 'profile/:id',
@@ -67,6 +78,8 @@ export const routes: Routes = [
     path: 'topics/:id',
     loadComponent: () =>
       import('./features/topics/pages/topic-detail/topic-detail').then((m) => m.TopicDetail),
+    canActivate: [requireAuthentication],
+    title: 'Tópico - One Forum',
   },
   {
     path: '',
@@ -91,6 +104,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'splash',
+    redirectTo: '',
+    pathMatch: 'full',
   },
 ];

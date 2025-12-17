@@ -150,7 +150,7 @@ export class Register {
   private handleLoginSuccess(): void {
     this.loading.set(false);
     this.showMessage('Login realizado com sucesso!', 'success');
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   private handleLoginError(err: any): void {

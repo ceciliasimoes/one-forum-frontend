@@ -101,7 +101,7 @@ export class Profile {
         error: (err) => {
           console.error('Erro ao carregar perfil:', err);
           this.showMessage('Usuário não encontrado.', 'error');
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         },
       });
     }

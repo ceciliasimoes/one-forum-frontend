@@ -117,7 +117,7 @@ export class TopicCard {
       this.topicService.deleteTopic(current.id).subscribe({
         next: () => {
           this.showSnack('Tópico deletado com sucesso.');
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         },
         error: () => {
           this.showSnack('Erro ao deletar o tópico.', true);
