@@ -1,4 +1,4 @@
-import { Component, signal, inject, ChangeDetectionStrategy, WritableSignal } from '@angular/core';
+import { Component, signal, inject, ChangeDetectionStrategy, WritableSignal, computed, effect } from '@angular/core';
 import {
   Validators,
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { passwordsMatch, strongPassword } from '../../../../core/validators/passwordValidators';
 
@@ -23,6 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule
 ],
@@ -33,6 +35,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class Register {
   public readonly loading: WritableSignal<boolean> = signal(false);
   public readonly photoPreview: WritableSignal<string | ArrayBuffer | null> = signal(null);
+  public readonly passwordFocused = signal(false);
+  public readonly passwordTouched = signal(false);
 
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
@@ -66,6 +70,50 @@ export class Register {
     const reader = new FileReader();
     reader.onload = (): void => this.photoPreview.set(reader.result);
     reader.readAsDataURL(file);
+  }
+
+  public onPasswordFocus(): void {
+    this.passwordFocused.set(true);
+  }
+
+  public onPasswordBlur(): void {
+    this.passwordFocused.set(false);
+    this.passwordTouched.set(true);
+  }
+
+  public getPasswordValue(): string {
+    return this.form.get('password')?.value || '';
+  }
+
+  public hasMinLength(): boolean {
+    const password = this.getPasswordValue();
+    return password.length >= 6 && password.length <= 8;
+  }
+
+  public hasLowercase(): boolean {
+    return /[a-z]/.test(this.getPasswordValue());
+  }
+
+  public hasUppercase(): boolean {
+    return /[A-Z]/.test(this.getPasswordValue());
+  }
+
+  public hasNumber(): boolean {
+    return /[0-9]/.test(this.getPasswordValue());
+  }
+
+  public hasSymbol(): boolean {
+    return /[!@#$%^&*(),.?":{}|<>]/.test(this.getPasswordValue());
+  }
+
+  public getRequirementStatus(requirement: () => boolean): 'valid' | 'invalid' | 'pending' {
+    if (!this.passwordTouched() && !this.passwordFocused()) {
+      return 'pending';
+    }
+    if (this.passwordFocused()) {
+      return requirement() ? 'valid' : 'pending';
+    }
+    return requirement() ? 'valid' : 'invalid';
   }
 
   public submit(): void {

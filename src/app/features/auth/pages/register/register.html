@@ -68,18 +68,38 @@
             type="password"
             formControlName="password"
             autocomplete="new-password"
-            aria-describedby="password-help"
+            aria-describedby="password-requirements"
+            (focus)="onPasswordFocus()"
+            (blur)="onPasswordBlur()"
             required
           />
-
-          @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
-          <mat-error id="password-required" aria-live="polite">A senha é obrigatória.</mat-error>
-          } @if (form.get('password')?.hasError('strongPassword') && form.get('password')?.touched) {
-          <mat-error id="password-strong" aria-live="polite">
-            A senha deve ter 6 a 8 caracteres, incluir minúscula, maiúscula, número e símbolo.
-          </mat-error>
-          }
         </mat-form-field>
+
+        <div class="password-requirements" id="password-requirements">
+          <p class="requirements-title">A senha deve conter:</p>
+          <ul class="requirements-list">
+            <li [class]="getRequirementStatus(hasMinLength.bind(this))">
+              <mat-icon>{{ getRequirementStatus(hasMinLength.bind(this)) === 'valid' ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              <span>6 a 8 caracteres</span>
+            </li>
+            <li [class]="getRequirementStatus(hasLowercase.bind(this))">
+              <mat-icon>{{ getRequirementStatus(hasLowercase.bind(this)) === 'valid' ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              <span>Uma letra minúscula</span>
+            </li>
+            <li [class]="getRequirementStatus(hasUppercase.bind(this))">
+              <mat-icon>{{ getRequirementStatus(hasUppercase.bind(this)) === 'valid' ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              <span>Uma letra maiúscula</span>
+            </li>
+            <li [class]="getRequirementStatus(hasNumber.bind(this))">
+              <mat-icon>{{ getRequirementStatus(hasNumber.bind(this)) === 'valid' ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              <span>Um número</span>
+            </li>
+            <li [class]="getRequirementStatus(hasSymbol.bind(this))">
+              <mat-icon>{{ getRequirementStatus(hasSymbol.bind(this)) === 'valid' ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              <span>Um símbolo (!@#$%^&*)</span>
+            </li>
+          </ul>
+        </div>
 
         <mat-form-field appearance="outline" class="full">
           <mat-label>Confirmar senha</mat-label>
