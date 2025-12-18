@@ -13,6 +13,16 @@
   font-weight: 600;
 }
 
+.category-label {
+  margin-top: 18px;
+  display: block;
+  font-weight: 600;
+}
+
+.category-label .required {
+  color: #ef4444;
+}
+
 .tag-box {
   display: flex;
   gap: 12px;

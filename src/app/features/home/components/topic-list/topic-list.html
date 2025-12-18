@@ -56,20 +56,23 @@
             </div>  
         }
         @else {
-            <div class="message-topic-list-container">
-                @if (this.statusFlag() === StatusFlagEnum.LOADING) {
-                    <mat-spinner class="loading-spinner"></mat-spinner>
-                    <p>Buscando tópicos...</p>
+            @if (this.statusFlag() === StatusFlagEnum.LOADING) {
+                @for (item of [1, 2, 3, 4, 5]; track item) {
+                    <skeleton-topic-card></skeleton-topic-card>
                 }
-                @else if (this.statusFlag() === StatusFlagEnum.ERROR) {
-                    <mat-icon class="fail-icon">web_asset_off</mat-icon>
-                    <p>Não foi possível recuperar os tópicos</p>
-                }
-                @else {
-                    <mat-icon class="fail-icon">question_mark</mat-icon>
-                    <p>{{ emptyTopicsMessage() }}</p> 
-                }
-            </div>
+            }
+            @else {
+                <div class="message-topic-list-container">
+                    @if (this.statusFlag() === StatusFlagEnum.ERROR) {
+                        <mat-icon class="fail-icon">web_asset_off</mat-icon>
+                        <p>Não foi possível recuperar os tópicos</p>
+                    }
+                    @else {
+                        <mat-icon class="fail-icon">question_mark</mat-icon>
+                        <p>{{ emptyTopicsMessage() }}</p>
+                    }
+                </div>
+            }
         }
     </div>
 </div>

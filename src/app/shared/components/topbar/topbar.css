@@ -51,12 +51,16 @@ mat-toolbar{
     height: 3rem;
 
     overflow: hidden;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .logo-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 .pfp-container {

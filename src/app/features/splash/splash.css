@@ -45,7 +45,7 @@
   width: 100px;
   height: 100px;
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border-radius: 24px;
+  border-radius: 50%;
   margin: 0 auto 20px auto;
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
 
@@ -62,6 +62,11 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   svg {

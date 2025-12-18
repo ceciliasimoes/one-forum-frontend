@@ -52,38 +52,58 @@ export class TopicDialog {
     const value = this.categoryInput().trim();
     if (!value) return;
     if (this.categoryList().length >= this.maxCategories) {
-      this.showSnackBar('Maximum categories reached.');
+      this.showSnackBar('Máximo de categorias atingido.');
       return;
     }
     if (this.categoryList().includes(value)) {
-      this.showSnackBar('Category already exists.');
+      this.showSnackBar('Categoria já existe.');
       return;
     }
 
     this.categoryList.update(categories => [...categories, value]);
     this.categoryInput.set('');
-    this.showSnackBar('Category added successfully.');
+    this.showSnackBar('Categoria adicionada com sucesso.');
   }
 
   removeCategory(category: string) {
     this.categoryList.update(categories => categories.filter(c => c !== category));
-    this.showSnackBar('Category removed successfully.');
+    this.showSnackBar('Categoria removida com sucesso.');
   }
 
   save() {
-    if (this.form.invalid) {
-      this.showSnackBar('Please fill in all required fields.');
+    const titleControl = this.form.controls.title;
+    const contentControl = this.form.controls.content;
+
+    if (titleControl.hasError('required')) {
+      this.showSnackBar('O título é obrigatório.');
+      return;
+    }
+    if (titleControl.hasError('minlength')) {
+      this.showSnackBar('O título deve ter pelo menos 4 caracteres.');
+      return;
+    }
+    if (contentControl.hasError('required')) {
+      this.showSnackBar('A descrição é obrigatória.');
+      return;
+    }
+    if (contentControl.hasError('minlength')) {
+      this.showSnackBar('A descrição deve ter pelo menos 10 caracteres.');
       return;
     }
 
     if (this.data.mode === 'create') {
+      if (this.categoryList().length === 0) {
+        this.showSnackBar('Adicione pelo menos uma categoria.');
+        return;
+      }
+      
       this.dialogRef.close({
         mode: 'create',
         title: this.form.controls.title.value,
         content: this.form.controls.content.value,
         categories: this.categoryList(),
       });
-      this.showSnackBar('Topic created successfully.');
+      this.showSnackBar('Tópico criado com sucesso.');
       return;
     }
 
@@ -92,7 +112,7 @@ export class TopicDialog {
       title: this.form.controls.title.value,
       content: this.form.controls.content.value,
     });
-    this.showSnackBar('Topic updated successfully.');
+    this.showSnackBar('Tópico atualizado com sucesso.');
   }
 
   cancel() {
@@ -100,7 +120,7 @@ export class TopicDialog {
   }
 
   private showSnackBar(message: string) {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, 'Fechar', {
       duration: 3000,
     });
   }

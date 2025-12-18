@@ -10,13 +10,14 @@ import { Topic } from '../../../../core/models/topics';
 import { Location } from '@angular/common';
 import { CommentsService } from '../../../../core/services/comments.service';
 import { interval, Subscription } from 'rxjs';
-
 import { Comment } from '../../../../core/models/comments';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SkeletonTopicCard } from '../../../../shared/components/skeleton-topic-card/skeleton-topic-card';
+import { SkeletonComment } from '../../../../shared/components/skeleton-comment/skeleton-comment';
 
 @Component({
   selector: 'topic-detail',
-  imports: [TopicCard, CommentForm, MatButtonModule, MatIconModule, CommentsContainer],
+  imports: [TopicCard, CommentForm, MatButtonModule, MatIconModule, CommentsContainer, SkeletonTopicCard, SkeletonComment],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topic-detail.html',
   styleUrls: ['./topic-detail.css'],
@@ -31,6 +32,9 @@ export class TopicDetail {
 
   private refreshSub!: Subscription;
 
+  protected isLoadingTopic = signal(true);
+  protected isLoadingComments = signal(true);
+  
   protected topic: WritableSignal<Topic> = signal<Topic>({
     id: 0,
     title: '',
@@ -62,14 +66,28 @@ export class TopicDetail {
   }
 
   private loadTopic(): void {
-    this.topicService.getTopicById(this.topicId!).subscribe((topic) => {
-      this.topic.set(topic);
+    this.isLoadingTopic.set(true);
+    this.topicService.getTopicById(this.topicId!).subscribe({
+      next: (topic) => {
+        this.topic.set(topic);
+        this.isLoadingTopic.set(false);
+      },
+      error: () => {
+        this.isLoadingTopic.set(false);
+      }
     });
   }
 
   private loadComments(): void {
-    this.commentsService.getAll(Number(this.topicId)).subscribe((res) => {
-      this.comments.set(res.content);
+    this.isLoadingComments.set(true);
+    this.commentsService.getAll(Number(this.topicId)).subscribe({
+      next: (res) => {
+        this.comments.set(res.content);
+        this.isLoadingComments.set(false);
+      },
+      error: () => {
+        this.isLoadingComments.set(false);
+      }
     });
   }
 

@@ -7,11 +7,15 @@
   </nav>
 
   <section aria-label="Detalhes do tópico">
-    <topic-card
-      [topic]="topic()"
-      [comments]="comments().length"
-      [attr.aria-label]="'Tópico: ' + (topic().title || '')">
-    </topic-card>
+    @if (isLoadingTopic()) {
+      <skeleton-topic-card></skeleton-topic-card>
+    } @else {
+      <topic-card
+        [topic]="topic()"
+        [comments]="comments().length"
+        [attr.aria-label]="'Tópico: ' + (topic().title || '')">
+      </topic-card>
+    }
   </section>
   
   <section aria-label="Formulário de resposta">
@@ -22,10 +26,16 @@
   </section>
 
   <section aria-label="Lista de respostas" [attr.aria-live]="'polite'">
-    <comments-container
-      [comments]="comments()"
-      (deleteComment)="removeComment($event)">
-    </comments-container>
+    @if (isLoadingComments()) {
+      @for (item of [1, 2, 3]; track item) {
+        <skeleton-comment></skeleton-comment>
+      }
+    } @else {
+      <comments-container
+        [comments]="comments()"
+        (deleteComment)="removeComment($event)">
+      </comments-container>
+    }
   </section>
 </main>
  

@@ -12,48 +12,51 @@
   }
 </div>
 <div class="container">
-  <section class="user">
-    <!--Usuário-->
-    <mat-card class="user_profile">
-      <mat-card-content>
-        <img mat-card-image class="avatar" [src]="user().profilePhoto" />
-        <h3>{{ user().profileName }}</h3>
-        <span class="details">{{ user().email }}</span>
-      </mat-card-content>
-    </mat-card>
+  @if (isLoadingProfile()) {
+    <section class="user">
+      <skeleton-profile-card></skeleton-profile-card>
+    </section>
+  } @else {
+    <section class="user">
+      <mat-card class="user_profile">
+        <mat-card-content>
+          <img mat-card-image class="avatar" [src]="user().profilePhoto" />
+          <h3>{{ user().profileName }}</h3>
+          <span class="details">{{ user().email }}</span>
+        </mat-card-content>
+      </mat-card>
 
-    <!--Atividades-->
-    <mat-card>
-      <mat-card-header>{{isOwnProfile() ? "Minha atividade" : "Atividade"}}</mat-card-header>
-      <div class="activity">
-        <mat-icon class="activity_icon topics">description</mat-icon>
-        <div>
-          <span class="activity_title">{{isOwnProfile() ? "Meus tópicos" : "Tópicos"}}</span>
-          <p class="activity_data">{{ user().topicCreatedCount }}</p>
+      <mat-card>
+        <mat-card-header>{{isOwnProfile() ? "Minha atividade" : "Atividade"}}</mat-card-header>
+        <div class="activity">
+          <mat-icon class="activity_icon topics">description</mat-icon>
+          <div>
+            <span class="activity_title">{{isOwnProfile() ? "Meus tópicos" : "Tópicos"}}</span>
+            <p class="activity_data">{{ user().topicCreatedCount }}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="activity">
-        <mat-icon class="activity_icon comment">comment</mat-icon>
-        <div>
-          <span class="activity_title">{{isOwnProfile() ? "Meus comentários" : "Comentários"}}</span>
-          <p class="activity_data">{{ user().commentsCount }}</p>
+        <div class="activity">
+          <mat-icon class="activity_icon comment">comment</mat-icon>
+          <div>
+            <span class="activity_title">{{isOwnProfile() ? "Meus comentários" : "Comentários"}}</span>
+            <p class="activity_data">{{ user().commentsCount }}</p>
+          </div>
         </div>
-      </div>
 
-      <!-- <div class="activity">
-        <mat-icon class="activity_icon likes">thumb_up</mat-icon>
-        <div>
-          <span class="activity_title">Total de likes</span>
-          <p class="activity_data">20</p>
-        </div>
-      </div> -->
-    </mat-card>
-  </section>
+        <!-- <div class="activity">
+          <mat-icon class="activity_icon likes">thumb_up</mat-icon>
+          <div>
+            <span class="activity_title">Total de likes</span>
+            <p class="activity_data">20</p>
+          </div>
+        </div> -->
+      </mat-card>
+    </section>
+  }
 
   @if (isOwnProfile()) {
     <section class="settings">
-      <!--Informações-->
       <mat-card>
         <div class="information_header">
           <mat-card-header>Informações do perfil</mat-card-header>
@@ -111,7 +114,6 @@
         }
       </mat-card>
   
-      <!--Segurança-->
       <mat-card>
         <div class="header_icon">
           <mat-icon class="activity_icon security">lock</mat-icon>
@@ -123,7 +125,6 @@
         <button matButton="outlined" class="profile_button">Alterar Senha</button>
       </mat-card>
   
-      <!--Configurações-->
       <mat-card>
         <div class="header_icon">
           <mat-icon class="activity_icon topics">settings</mat-icon>
@@ -164,7 +165,6 @@
         <span class="details">Escolha seu idioma preferido</span>
       </mat-card>
   
-      <!--Sair-->
       <mat-card>
         <mat-card-header>Sair do perfil</mat-card-header>
         <button matButton="outlined" class="profile_button" (click)="this.logout()">Sair</button>

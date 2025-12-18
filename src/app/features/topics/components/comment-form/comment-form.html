@@ -4,10 +4,16 @@
   <textarea 
     class="input" 
     placeholder="Escreva seu comentário aqui..." 
-    [(ngModel)]="text" 
+    [ngModel]="text()"
+    (ngModelChange)="text.set($event)"
+    [maxlength]="MAX_COMMENT_LENGTH"
     aria-label="Campo de comentário" 
     required>
   </textarea>
+
+  <div class="character-count" aria-live="polite">
+    {{ characterCount() }} / {{ MAX_COMMENT_LENGTH }} caracteres
+  </div>
 
   <div class="bottom">
     <button 

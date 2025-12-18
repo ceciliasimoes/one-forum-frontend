@@ -18,6 +18,7 @@ import { StatusFlag } from '../../core/models/status-flag.model';
 import { Topic } from '../../core/models/topics';
 import { PageEvent } from '@angular/material/paginator';
 import { TopicListService } from '../../core/services/topic-list.service';
+import { SkeletonProfileCard } from '../../shared/components/skeleton-profile-card/skeleton-profile-card';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,8 @@ import { TopicListService } from '../../core/services/topic-list.service';
     MatDivider,
     MatSelectModule,
     ReactiveFormsModule,
-    TopicList
+    TopicList,
+    SkeletonProfileCard
 ],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
@@ -48,6 +50,7 @@ export class Profile {
   private readonly topicListService = inject(TopicListService);
   protected user: WritableSignal<User> = signal({} as User);
   protected isEditing = signal(false);
+  protected isLoadingProfile = signal(false);
   protected photoPreview = signal<string | null>(null);
   protected profileForm!: FormGroup;
   private selectedFile: File | null = null;
@@ -92,16 +95,19 @@ export class Profile {
       this.isOwnProfile.set(true);
       this.router.navigate(['/profile']);
     } else {
+      this.isLoadingProfile.set(true);
       this.authService.fetchUser(userId).subscribe({
         next: (userData) => {
           this.user.set(userData);
           this.isOwnProfile.set(false);
           this.setUserTopics();
+          this.isLoadingProfile.set(false);
         },
         error: (err) => {
           console.error('Erro ao carregar perfil:', err);
           this.showMessage('Usuário não encontrado.', 'error');
           this.router.navigate(['/home']);
+          this.isLoadingProfile.set(false);
         },
       });
     }

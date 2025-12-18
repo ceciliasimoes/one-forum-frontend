@@ -8,6 +8,7 @@ import { FiltersCard } from "../filters-card/filters-card";
 import { StatusFlag } from '../../../../core/models/status-flag.model';
 import { Topic } from '../../../../core/models/topics';
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
+import { SkeletonTopicCard } from '../../../../shared/components/skeleton-topic-card/skeleton-topic-card';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
     MatProgressSpinnerModule,
     FiltersCard,
     MatPaginatorModule,
+    SkeletonTopicCard,
 ],
   templateUrl: './topic-list.html',
   styleUrl: './topic-list.css',
