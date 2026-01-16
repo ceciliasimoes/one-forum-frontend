@@ -78,7 +78,7 @@ export class AuthService {
   login(data: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, data).pipe(
       tap((res) => {
-        this.tokenService.saveTokens(res.accessToken, res.refreshToken);
+        this.tokenService.saveTokens(res.accessToken.token, res.refreshToken.token);
         this.isLoggedSubject.next(true);
 
         const id = this.tokenService.getUserId();
@@ -94,6 +94,10 @@ export class AuthService {
       `${this.baseUrl}/auth/confirm-account`,
       { token }
     );
+  }
+
+  requestResendConfirmationEmail(email: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/auth/request-confirm-account`, { email });
   }
 
   logout(): void {

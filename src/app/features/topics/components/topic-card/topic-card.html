@@ -33,22 +33,22 @@
 
   <mat-chip-set class="tag-list" aria-label="Categorias do tópico">
     @for (tag of topic().categories; track $index) {
-      <mat-chip class="tag" aria-label="Categoria {{ tag.name }}">{{ tag.name }}</mat-chip>
+      <mat-chip class="tag" aria-label="Categoria {{ tag }}">{{ tag }}</mat-chip>
     }
   </mat-chip-set>
 
-  <mat-card-content class="topic-content">
+  <mat-card-content class="topic-content" style="overflow-wrap:break-word; word-wrap: break-word; word-break: break-word;">
     <!-- <p class="topic-text">{{ topic().content }}</p> -->
-     <div [innerHTML]="topic().content"></div>
+     <div class="content-wrapper" [innerHTML]="topic().content"></div>
   </mat-card-content>
 
   <footer class="topic-footer">
     <div class="user-info">
       <div class="avatar">
-        @if (topic().author.profile.photo) {
+        @if (topic().author.profilePhoto) {
           <img
-            [src]="topic().author.profile.photo"
-            [alt]="'Foto de ' + topic().author.profile.name"
+            [src]="topic().author.profilePhoto"
+            [alt]="'Foto de ' + topic().author.profileName"
             width="40"
             height="40"
           />
@@ -56,15 +56,15 @@
           <div
             class="avatar-fallback"
             role="img"
-            [attr.aria-label]="'Avatar de ' + topic().author.profile.name"
+            [attr.aria-label]="'Avatar de ' + topic().author.profileName"
           >
-            {{ getInitials(topic().author.profile.name) }}
+            {{ getInitials(topic().author.profileName || 'Usuário') }}
           </div>
         }
       </div>
 
       <div class="details">
-        <a class="name" [routerLink]="'/profile/' + topic().author.id">{{ topic().author.profile.name }}</a>
+        <a class="name" [routerLink]="'/profile/' + topic().author.id">{{ topic().author.profileName }}</a>
 
         <div class="date">
           <mat-icon class="date-icon" aria-hidden="true">calendar_today</mat-icon>

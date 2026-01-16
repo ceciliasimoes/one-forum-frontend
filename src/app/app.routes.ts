@@ -54,7 +54,6 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./features/home/pages/home/home').then((m) => m.Home),
-    canActivate: [requireAuthentication],
     title: 'Home - One Forum',
   },
   {

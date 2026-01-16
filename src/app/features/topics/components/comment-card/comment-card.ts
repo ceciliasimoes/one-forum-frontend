@@ -38,7 +38,8 @@ export class CommentCard {
 
   protected readonly user = computed(() => this.authService.currentUser());
   protected readonly showButtons = computed(() => {
-    return this.comment()?.userId === this.user()?.id;
+    console.log('Comparing', this.comment(), this.user());
+    return this.comment()?.author?.id === this.user()?.id;
   });
   protected readonly isEditing = signal(false);
 

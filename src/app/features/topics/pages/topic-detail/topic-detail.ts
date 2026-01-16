@@ -17,7 +17,15 @@ import { SkeletonComment } from '../../../../shared/components/skeleton-comment/
 
 @Component({
   selector: 'topic-detail',
-  imports: [TopicCard, CommentForm, MatButtonModule, MatIconModule, CommentsContainer, SkeletonTopicCard, SkeletonComment],
+  imports: [
+    TopicCard,
+    CommentForm,
+    MatButtonModule,
+    MatIconModule,
+    CommentsContainer,
+    SkeletonTopicCard,
+    SkeletonComment,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topic-detail.html',
   styleUrls: ['./topic-detail.css'],
@@ -28,13 +36,13 @@ export class TopicDetail {
   private readonly topicId = this.route.snapshot.paramMap.get('id');
   private readonly topicService = inject(TopicService);
   private readonly commentsService = inject(CommentsService);
-  private readonly snackBar = inject(MatSnackBar); 
+  private readonly snackBar = inject(MatSnackBar);
 
   private refreshSub!: Subscription;
 
   protected isLoadingTopic = signal(true);
   protected isLoadingComments = signal(true);
-  
+
   protected topic: WritableSignal<Topic> = signal<Topic>({
     id: 0,
     title: '',
@@ -44,10 +52,8 @@ export class TopicDetail {
     author: {
       id: 0,
       createdAt: '',
-      profile: {
-        name: '',
-        photo: ''
-      }
+      profileName: '',
+      profilePhoto: '',
     },
     createdAt: '',
     updatedAt: '',
@@ -74,20 +80,39 @@ export class TopicDetail {
       },
       error: () => {
         this.isLoadingTopic.set(false);
-      }
+      },
     });
   }
 
   private loadComments(): void {
-    this.isLoadingComments.set(true);
+    const isInitialLoad = this.comments().length === 0;
+    if (isInitialLoad) {
+      this.isLoadingComments.set(true);
+    }
+    
     this.commentsService.getAll(Number(this.topicId)).subscribe({
       next: (res) => {
-        this.comments.set(res.content);
-        this.isLoadingComments.set(false);
+        const newComments = res.content;
+        
+        if (isInitialLoad) {
+          // Primeira carga: carregar todos
+          this.comments.set(newComments);
+          this.isLoadingComments.set(false);
+        } else {
+          // Atualizações subsequentes: apenas adicionar novos
+          const currentIds = new Set(this.comments().map(c => c.id));
+          const commentsToAdd = newComments.filter((c: Comment) => !currentIds.has(c.id));
+          
+          if (commentsToAdd.length > 0) {
+            this.comments.update(current => [...commentsToAdd, ...current]);
+          }
+        }
       },
       error: () => {
-        this.isLoadingComments.set(false);
-      }
+        if (isInitialLoad) {
+          this.isLoadingComments.set(false);
+        }
+      },
     });
   }
 
@@ -96,12 +121,13 @@ export class TopicDetail {
 
     this.commentsService.create(Number(this.topicId), { content: text }).subscribe({
       next: () => {
+        // Recarrega os comentários após adicionar um novo
         this.loadComments();
-        this.snackBar.open('Comentário adicionado com sucesso!', 'Fechar', { duration: 3000 }); 
+        this.snackBar.open('Comentário adicionado com sucesso!', 'Fechar', { duration: 3000 });
       },
       error: (err) => {
         console.error('Erro ao criar comentário', err);
-        this.snackBar.open('Erro ao adicionar comentário.', 'Fechar', { duration: 3000 }); 
+        this.snackBar.open('Erro ao adicionar comentário.', 'Fechar', { duration: 3000 });
       },
     });
   }
@@ -109,7 +135,7 @@ export class TopicDetail {
   removeComment(id: number): void {
     const updatedComments = this.comments().filter((comment) => comment.id !== id);
     this.comments.set(updatedComments);
-    this.snackBar.open('Comentário removido com sucesso!', 'Fechar', { duration: 3000 }); 
+    this.snackBar.open('Comentário removido com sucesso!', 'Fechar', { duration: 3000 });
   }
 
   backToPreviousPage() {

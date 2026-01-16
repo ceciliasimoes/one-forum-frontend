@@ -34,7 +34,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class Register {
   public readonly loading: WritableSignal<boolean> = signal(false);
-  public readonly photoPreview: WritableSignal<string | ArrayBuffer | null> = signal(null);
   public readonly passwordFocused = signal(false);
   public readonly passwordTouched = signal(false);
 
@@ -42,8 +41,6 @@ export class Register {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
-  
-  private selectedFile: File | null = null;
 
   public readonly form: FormGroup = this.fb.group(
     {
@@ -51,26 +48,9 @@ export class Register {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, strongPassword()]],
       confirmPassword: ['', Validators.required],
-      photo: new FormControl<File | null>(null, Validators.required),
     },
     { validators: passwordsMatch('password', 'confirmPassword') }
   );
-
-  public onPhotoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement | null;
-    const file: File | undefined = input?.files?.[0];
-    
-    if (!file) {
-      return;
-    }
-
-    this.selectedFile = file;
-    this.form.patchValue({ photo: file });
-
-    const reader = new FileReader();
-    reader.onload = (): void => this.photoPreview.set(reader.result);
-    reader.readAsDataURL(file);
-  }
 
   public onPasswordFocus(): void {
     this.passwordFocused.set(true);
@@ -117,33 +97,21 @@ export class Register {
   }
 
   public submit(): void {
-    if (this.form.invalid || !this.selectedFile) {
+    if (this.form.invalid) {
       this.showMessage('Por favor, preencha todos os campos corretamente', 'error');
       return;
     }
 
     this.loading.set(true);
-    this.uploadPhotoAndRegister();
+    this.performRegister();
   }
 
   public goToLogin(): void {
     this.router.navigate(['/login']);
   }
 
-  private uploadPhotoAndRegister(): void {
-    this.authService.uploadProfile(this.selectedFile!).subscribe({
-      next: (uploadRes: any): void => {
-        this.handlePhotoUploadSuccess(uploadRes);
-      },
-      error: (err): void => {
-        this.handlePhotoUploadError(err);
-      },
-    });
-  }
-
-  private handlePhotoUploadSuccess(uploadRes: string): void {
-    const avatarUrl = uploadRes;
-    const payload = this.buildRegisterPayload(avatarUrl);
+  private performRegister(): void {
+    const payload = this.buildRegisterPayload();
 
     this.authService.register(payload).subscribe({
       next: (res: any): void => this.handleRegisterSuccess(res, payload),
@@ -151,19 +119,12 @@ export class Register {
     });
   }
 
-  private handlePhotoUploadError(err: any): void {
-    this.loading.set(false);
-    console.error('Erro ao enviar foto:', err);
-    this.showMessage('Erro ao enviar foto. Tente novamente.', 'error');
-  }
-
-  private buildRegisterPayload(avatarUrl: string): RegisterRequest {  
+  private buildRegisterPayload(): RegisterRequest {  
     return {
-      name: this.form.value.username!.trim(),
       email: this.form.value.email!,
       password: this.form.value.password!,
       matchPassword: this.form.value.password!,
-      avatarUrl,
+      name: this.form.value.username!.trim(),
     };
   }
 
@@ -171,8 +132,11 @@ export class Register {
     const status = res?.status ?? res?.statusCode ?? res?.code;
 
     if (status === 201) {
-      this.showMessage('Cadastro realizado com sucesso!', 'success');
-      this.performAutoLogin(payload);
+      this.loading.set(false);
+      this.showMessage('Cadastro realizado com sucesso! Verifique seu email para confirmar sua conta.', 'success');
+      this.router.navigate(['/confirm-account'], { 
+        state: { email: payload.email, isLocked: true } 
+      });
     } else {
       this.loading.set(false);
       this.showMessage('Cadastro realizado. Faça login para continuar.', 'info');
@@ -184,28 +148,6 @@ export class Register {
     this.loading.set(false);
     console.error('Erro ao criar usuário:', err);
     this.showMessage('Erro ao criar usuário. Tente novamente.', 'error');
-  }
-
-  private performAutoLogin(payload: RegisterRequest): void {
-    this.authService
-      .login({ email: payload.email, password: payload.password })
-      .subscribe({
-        next: (): void => this.handleLoginSuccess(),
-        error: (err): void => this.handleLoginError(err),
-      });
-  }
-
-  private handleLoginSuccess(): void {
-    this.loading.set(false);
-    this.showMessage('Login realizado com sucesso!', 'success');
-    this.router.navigate(['/home']);
-  }
-
-  private handleLoginError(err: any): void {
-    this.loading.set(false);
-    console.error('Erro no login automático:', err);
-    this.showMessage('Cadastro ok, mas houve erro no login. Tente fazer login.', 'warning');
-    this.router.navigate(['/login']);
   }
 
   private showMessage(message: string, type: 'success' | 'error' | 'info' | 'warning'): void {

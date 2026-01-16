@@ -18,7 +18,7 @@
             <div>
                 <mat-chip-set>
                     @for (category of this.categoriesShown(); track $index) {
-                        <mat-chip>{{category.name}}</mat-chip>
+                        <mat-chip>{{category}}</mat-chip>
                     }
                     @if (this.categoriesHidden()) {
                         <mat-chip [matTooltip]="this.categoriesHiddenString()" matTooltipClass="tooltip-class">{{this.categoriesHidden()!.length}}+</mat-chip>
@@ -27,14 +27,14 @@
             </div>
             <div class="user-info">
                 <div class="pfp-container">
-                    @if (this.topic().author.profile.photo) {
-                        <img [src]="this.topic().author.profile.photo" alt="">
+                    @if (this.topic().author.profilePhoto) {
+                        <img [src]="this.topic().author.profilePhoto" alt="">
                     }
                     @else {
-                        <span>{{this.topic().author.profile.name.slice(0, 2).toUpperCase()}}</span>
+                        <span>{{this.topic().author.profileName.slice(0, 2).toUpperCase()}}</span>
                     }
                 </div>
-                <span>{{this.topic().author.profile.name}}</span>
+                <span>{{this.topic().author.profileName}}</span>
                 <span> · </span>
                 <span>{{this.createdAt().toLocaleDateString()}}</span>
             </div>

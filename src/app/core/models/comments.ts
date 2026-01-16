@@ -13,15 +13,17 @@ export interface CreateComment {
 //   updatedAt: string;
 // }
 
+export interface CommentAuthor {
+  id: number;
+  createdAt: string;
+}
+
 export interface Comment {
   id: number;
   topicId: number;
-  userId: number;
-
+  author: CommentAuthor;
   userProfileName: string;
-  userProfilePhoto: string;
-
+  userProfilePhoto?: string;
   content: string;
   createdAt: string;
-  updateAt: string;
 }

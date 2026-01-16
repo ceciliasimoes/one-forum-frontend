@@ -3,9 +3,15 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface TokenData {
+  token: string;
+  expirationDate: string;
+  createdAt: string;
+}
+
 export interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
+  accessToken: TokenData;
+  refreshToken: TokenData;
 }
 
 export interface RegisterRequest {
@@ -13,7 +19,6 @@ export interface RegisterRequest {
   password: string;
   matchPassword: string;
   name: string;
-  avatarUrl: string;
 }
 
 export interface RefreshTokenRequest {

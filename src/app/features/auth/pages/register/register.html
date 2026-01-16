@@ -11,26 +11,6 @@
         aria-describedby="register-subtitle"
         novalidate
       >
-        <label class="avatar-upload" for="avatar-input">
-          <input
-            id="avatar-input"
-            type="file"
-            accept="image/*"
-            (change)="onPhotoSelected($event)"
-            aria-label="Selecionar foto de perfil"
-          />
-
-          @if (photoPreview()) {
-          <img
-            [src]="photoPreview()"
-            class="avatar-image"
-            alt="Prévia da foto de perfil selecionada"
-          />
-          } @else {
-          <div class="avatar-placeholder" aria-hidden="true">Upload</div>
-          }
-        </label>
-
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Nome de usuário</mat-label>
           <input

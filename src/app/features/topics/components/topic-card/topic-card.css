@@ -47,6 +47,25 @@
   margin: 6px 0 18px 0;
 }
 
+.topic-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.content-wrapper {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.content-wrapper * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
 .topic-footer {
   border-top: 1px solid #e5e7eb;
   padding-top: 16px;

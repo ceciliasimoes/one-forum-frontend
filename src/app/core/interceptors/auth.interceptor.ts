@@ -64,12 +64,12 @@ function handle401(
     return refreshService.refresh(refreshToken).pipe(
       switchMap((res) => {
         isRefreshing = false;
-        tokenService.saveTokens(res.accessToken, res.refreshToken);
-        refreshTokenSubject.next(res.accessToken);
+        tokenService.saveTokens(res.accessToken.token, res.refreshToken.token);
+        refreshTokenSubject.next(res.accessToken.token);
 
         return next(
           request.clone({
-            setHeaders: { Authorization: `Bearer ${res.accessToken}` },
+            setHeaders: { Authorization: `Bearer ${res.accessToken.token}` },
           })
         );
       }),

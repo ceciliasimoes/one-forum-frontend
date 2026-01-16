@@ -39,7 +39,7 @@ export class TopicListCard {
   
   categoriesHiddenString = computed(() => 
     this.categoriesHidden() != null ?
-      this.categoriesHidden()!.reduce((acc, category,) => acc + category.name + ", ", "") : "");
+      this.categoriesHidden()!.reduce((acc, category,) => acc + category + ", ", "") : "");
 
   createdAt = computed(() => new Date(this.topic().createdAt))
 

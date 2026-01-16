@@ -17,8 +17,12 @@
 
       <h1 class="title">E-mail confirmado!</h1>
       <p class="text">
-        Seu e-mail foi verificado com sucesso. Agora você já pode aproveitar todos os recursos.
+        Seu e-mail foi verificado com sucesso. Agora você já pode acessar sua conta e aproveitar todos os recursos.
       </p>
+
+      <button mat-flat-button color="primary" class="btn" (click)="goToLogin()">
+        Fazer Login
+      </button>
 
       } @else {
 
@@ -35,10 +39,17 @@
         </svg>
       </div>
 
-      <h1 class="title">Você precisa ativar sua conta.</h1>
-      <p class="text">Se não recebeu o e-mail de ativação, clique no botão abaixo para receber.</p>
+      <h1 class="title">Confirme seu e-mail</h1>
+      <p class="text">
+        Enviamos um link de confirmação para o seu e-mail. Por favor, verifique sua caixa de entrada e clique no link para ativar sua conta.
+      </p>
+      <p class="text" style="margin-top: 1rem; font-size: 0.9rem;">
+        Não recebeu o e-mail? Verifique sua pasta de spam ou clique no botão abaixo para reenviar.
+      </p>
 
-      <button class="btn" (click)="resendConfirmationEmail()">RECEBER E-MAIL DE CONFIRMAÇÃO</button>
+      <button mat-flat-button color="primary" class="btn" (click)="resendConfirmationEmail()" [disabled]="loading()">
+        {{ loading() ? 'Enviando...' : 'Reenviar E-mail de Confirmação' }}
+      </button>
 
       }
     </div>

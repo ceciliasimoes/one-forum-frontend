@@ -64,8 +64,15 @@ export class Login {
       error: async (e) => {
         const {error} = e;
         this.loading.set(false);
-        if (error.status === 403) {
-          if (error.type === 'ACCOUNT_LOCKED') {
+        
+        if (error.status === 403 || error.status === 401) {
+          const isAccountLocked = error.type === 'ACCOUNT_LOCKED';
+          const isEmailNotConfirmed = error.type === 'EMAIL_NOT_CONFIRMED' || 
+                                       error.message?.toLowerCase().includes('email') ||
+                                       error.message?.toLowerCase().includes('confirm');
+          
+          if (isAccountLocked || isEmailNotConfirmed) {
+            this.snack.open('Email não confirmado. Redirecionando...', 'Fechar', { duration: 2500 });
             await this.router.navigate(['/confirm-account'], {
               state: {
                 email: email,

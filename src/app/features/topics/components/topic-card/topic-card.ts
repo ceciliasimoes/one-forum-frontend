@@ -53,7 +53,7 @@ export class TopicCard {
         mode: 'edit',
         title: topic.title,
         content: topic.content,
-        categories: topic.categories.map((c) => c.name),
+        categories: topic.categories.map((c) => c),
       },
     });
 
